@@ -2,6 +2,8 @@ plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlin.compose)
+  id("com.google.devtools.ksp")
+  id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -28,15 +30,32 @@ android {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
   }
-  kotlinOptions {
-    jvmTarget = "11"
-  }
   buildFeatures {
     compose = true
   }
 }
 
+//noinspection UseTomlInstead
 dependencies {
+
+  // -------------------- viewmodel --------------------
+  implementation("androidx.lifecycle:lifecycle-viewmodel:2.9.4")
+
+  // -------------------- navigation --------------------
+  implementation("androidx.navigation:navigation-compose:2.9.5")
+
+  // -------------------- retrofit --------------------
+  implementation("com.squareup.retrofit2:retrofit:3.0.0")
+  implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+
+  // -------------------- coil --------------------
+  implementation("io.coil-kt.coil3:coil:3.3.0")
+  implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
+
+  // -------------------- dagger hilt --------------------
+  implementation("com.google.dagger:hilt-android:2.57.2")
+  ksp("com.google.dagger:hilt-android-compiler:2.57.2")
+  implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
 
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)
