@@ -1,0 +1,37 @@
+package com.manishjajoriya.moctale.presentation.components
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import com.manishjajoriya.moctale.model.explore.Content
+import com.manishjajoriya.moctale.ui.theme.Typography
+
+@Composable
+fun MoviePoster(content: Content) {
+  val caption =
+      if (!content.caption.isNullOrEmpty()) content.caption
+      else if (content.isShow) "Show • ${content.year}" else "Movie • ${content.year}"
+
+  Column(modifier = Modifier.width(100.dp)) {
+    AsyncImage(
+        model = content.image,
+        contentDescription = content.name,
+        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)),
+        contentScale = ContentScale.Crop,
+    )
+    Spacer(modifier = Modifier.height(8.dp))
+    Text(text = content.name, style = Typography.titleMedium)
+    Text(text = caption, style = Typography.labelMedium, color = Color.Gray)
+  }
+}

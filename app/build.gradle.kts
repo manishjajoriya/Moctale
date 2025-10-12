@@ -27,8 +27,8 @@ android {
     }
   }
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
   }
   buildFeatures {
     compose = true
@@ -49,7 +49,7 @@ dependencies {
   implementation("com.squareup.retrofit2:converter-gson:3.0.0")
 
   // -------------------- coil --------------------
-  implementation("io.coil-kt.coil3:coil:3.3.0")
+  implementation("io.coil-kt.coil3:coil-compose:3.3.0")
   implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
 
   // -------------------- dagger hilt --------------------

@@ -1,0 +1,3 @@
+package com.manishjajoriya.moctale.usecase
+
+data class MoctaleApiUseCase(val exploreUseCase: ExploreUseCase)
