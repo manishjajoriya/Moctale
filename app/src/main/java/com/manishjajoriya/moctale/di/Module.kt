@@ -2,6 +2,7 @@ package com.manishjajoriya.moctale.di
 
 import com.manishjajoriya.moctale.Constants
 import com.manishjajoriya.moctale.remote.MoctaleApi
+import com.manishjajoriya.moctale.usecase.ContentUseCase
 import com.manishjajoriya.moctale.usecase.ExploreUseCase
 import com.manishjajoriya.moctale.usecase.MoctaleApiUseCase
 import dagger.Module
@@ -31,5 +32,10 @@ object Module {
 
   @Provides
   @Singleton
-  fun provideMoctaleApiUseCase(exploreUseCase: ExploreUseCase) = MoctaleApiUseCase(exploreUseCase)
+  fun provideContentUseCase(moctaleApi: MoctaleApi) = ContentUseCase(moctaleApi = moctaleApi)
+
+  @Provides
+  @Singleton
+  fun provideMoctaleApiUseCase(exploreUseCase: ExploreUseCase, contentUseCase: ContentUseCase) =
+      MoctaleApiUseCase(exploreUseCase, contentUseCase)
 }

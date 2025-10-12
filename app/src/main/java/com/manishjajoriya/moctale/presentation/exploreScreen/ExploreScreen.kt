@@ -2,9 +2,12 @@ package com.manishjajoriya.moctale.presentation.exploreScreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -21,13 +24,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.manishjajoriya.moctale.model.explore.ExploreItem
+import com.manishjajoriya.moctale.navgraph.Routes
 import com.manishjajoriya.moctale.presentation.components.MoviePoster
 import com.manishjajoriya.moctale.ui.theme.Typography
 
 @Composable
-fun ExploreScreen(modifier: Modifier = Modifier, exploreViewModel: ExploreViewModel) {
+fun ExploreScreen(
+    paddingValues: PaddingValues,
+    exploreViewModel: ExploreViewModel,
+    navController: NavController,
+) {
   val loading by exploreViewModel.loading.collectAsState()
   val exploreData by exploreViewModel.exploreData.collectAsState()
 
@@ -35,7 +44,7 @@ fun ExploreScreen(modifier: Modifier = Modifier, exploreViewModel: ExploreViewMo
 
   if (loading) {
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier.padding(paddingValues).fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -45,14 +54,24 @@ fun ExploreScreen(modifier: Modifier = Modifier, exploreViewModel: ExploreViewMo
 
   exploreData?.let { data ->
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(140.dp),
-        modifier = modifier.padding(horizontal = 16.dp),
+        columns = GridCells.Adaptive(180.dp),
+        modifier = Modifier.padding(paddingValues).padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(20.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
       data.forEach { exploreItem ->
-        item(span = { GridItemSpan(maxLineSpan) }) { SectionTitle(exploreItem) }
-        itemsIndexed(exploreItem.contentList) { index, content -> MoviePoster(content = content) }
+        item(span = { GridItemSpan(maxLineSpan) }) {
+          Column {
+            Spacer(modifier = Modifier.height(16.dp))
+            SectionTitle(exploreItem)
+          }
+        }
+        itemsIndexed(exploreItem.contentList) { index, content ->
+          MoviePoster(
+              content = content,
+              onClick = { slug -> navController.navigate("${Routes.ContentScreen.route}/$slug") },
+          )
+        }
       }
     }
   }

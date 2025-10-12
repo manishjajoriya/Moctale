@@ -30,9 +30,7 @@ android {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
   }
-  buildFeatures {
-    compose = true
-  }
+  buildFeatures { compose = true }
 }
 
 //noinspection UseTomlInstead
@@ -56,6 +54,9 @@ dependencies {
   implementation("com.google.dagger:hilt-android:2.57.2")
   ksp("com.google.dagger:hilt-android-compiler:2.57.2")
   implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
+
+  // -------------------- android chart --------------------
+  implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)

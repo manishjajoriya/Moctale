@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
       MoctaleTheme {
         val navController = rememberNavController()
         Scaffold(modifier = Modifier.fillMaxSize(), topBar = { TopBar() }) { innerPadding ->
-          NavGraph(modifier = Modifier.padding(innerPadding), navController = navController)
+          NavGraph(paddingValues = innerPadding, navController = navController)
         }
       }
     }

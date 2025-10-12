@@ -1,10 +1,10 @@
 package com.manishjajoriya.moctale.presentation.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,12 +18,12 @@ import com.manishjajoriya.moctale.model.explore.Content
 import com.manishjajoriya.moctale.ui.theme.Typography
 
 @Composable
-fun MoviePoster(content: Content) {
+fun MoviePoster(content: Content, onClick: (String) -> Unit) {
   val caption =
       if (!content.caption.isNullOrEmpty()) content.caption
       else if (content.isShow) "Show • ${content.year}" else "Movie • ${content.year}"
 
-  Column(modifier = Modifier.width(100.dp)) {
+  Column(modifier = Modifier.clickable(onClick = { onClick(content.slug) })) {
     AsyncImage(
         model = content.image,
         contentDescription = content.name,
