@@ -54,7 +54,7 @@ fun ExploreScreen(
 
   exploreData?.let { data ->
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(180.dp),
+        columns = GridCells.Adaptive(160.dp),
         modifier = Modifier.padding(paddingValues).padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(20.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),

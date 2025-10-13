@@ -10,13 +10,16 @@ import com.manishjajoriya.moctale.presentation.contentScreen.ContentScreen
 import com.manishjajoriya.moctale.presentation.contentScreen.ContentViewModel
 import com.manishjajoriya.moctale.presentation.exploreScreen.ExploreScreen
 import com.manishjajoriya.moctale.presentation.exploreScreen.ExploreViewModel
+import com.manishjajoriya.moctale.presentation.personScreen.PersonScreen
+import com.manishjajoriya.moctale.presentation.personScreen.PersonViewModel
 
 @Composable
 fun NavGraph(paddingValues: PaddingValues, navController: NavHostController) {
   val exploreViewModel: ExploreViewModel = hiltViewModel()
   val contentViewModel: ContentViewModel = hiltViewModel()
-//  val startDestination = Routes.ContentScreen.route + "/kantara-chapter-1-2025"
-    val startDestination = Routes.ExploreScreen.route
+  val personViewModel: PersonViewModel = hiltViewModel()
+//    val startDestination = Routes.PersonScreen.route + "/rishab-shetty"
+  val startDestination = Routes.ExploreScreen.route
 
   NavHost(navController = navController, startDestination = startDestination) {
     composable(Routes.ExploreScreen.route) {
@@ -29,7 +32,17 @@ fun NavGraph(paddingValues: PaddingValues, navController: NavHostController) {
 
     composable(Routes.ContentScreen.route + "/{slug}") {
       val slug = it.arguments?.getString("slug") ?: "kantara-chapter-1-2025"
-      ContentScreen(paddingValues = paddingValues, slug = slug, viewModel = contentViewModel)
+      ContentScreen(
+          paddingValues = paddingValues,
+          slug = slug,
+          viewModel = contentViewModel,
+          navController = navController,
+      )
+    }
+
+    composable(Routes.PersonScreen.route + "/{name}") {
+      val name = it.arguments?.getString("name") ?: "rishab-shetty"
+      PersonScreen(paddingValues = paddingValues, name = name, viewModel = personViewModel)
     }
   }
 }

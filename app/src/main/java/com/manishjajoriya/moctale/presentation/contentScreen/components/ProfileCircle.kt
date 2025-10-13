@@ -1,6 +1,7 @@
 package com.manishjajoriya.moctale.presentation.contentScreen.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
@@ -19,8 +20,11 @@ import coil3.compose.AsyncImage
 import com.manishjajoriya.moctale.ui.theme.Typography
 
 @Composable
-fun ProfileCircle(imageUrl: String?, name: String, label: String) {
-  Column(horizontalAlignment = Alignment.CenterHorizontally) {
+fun ProfileCircle(imageUrl: String?, name: String, label: String, onClick: () -> Unit) {
+  Column(
+      modifier = Modifier.clickable(onClick = onClick),
+      horizontalAlignment = Alignment.CenterHorizontally,
+  ) {
     if (imageUrl != null) {
       AsyncImage(
           model = imageUrl,

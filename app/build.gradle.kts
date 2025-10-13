@@ -1,3 +1,16 @@
+import java.io.FileInputStream
+import java.util.Properties
+
+val localProperties =
+  Properties().apply {
+    val localFile = rootProject.file("local.properties")
+    if (localFile.exists()) {
+      load(FileInputStream(localFile))
+    }
+  }
+
+val authToken: String = localProperties.getProperty("auth_token", "")
+
 plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.kotlin.android)
@@ -18,6 +31,8 @@ android {
     versionName = "1.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    android.buildFeatures.buildConfig = true
+    buildConfigField("String", "AUTH_TOKEN", "\"$authToken\"")
   }
 
   buildTypes {

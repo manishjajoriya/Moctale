@@ -1,15 +1,20 @@
 package com.manishjajoriya.moctale.di
 
+import com.manishjajoriya.moctale.BuildConfig
 import com.manishjajoriya.moctale.Constants
 import com.manishjajoriya.moctale.remote.MoctaleApi
 import com.manishjajoriya.moctale.usecase.ContentUseCase
 import com.manishjajoriya.moctale.usecase.ExploreUseCase
 import com.manishjajoriya.moctale.usecase.MoctaleApiUseCase
+import com.manishjajoriya.moctale.usecase.PersonUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import jakarta.inject.Singleton
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -19,9 +24,27 @@ object Module {
 
   @Provides
   @Singleton
-  fun provideMoctaleApi(): MoctaleApi =
+  fun provideClient(): OkHttpClient {
+    val headerInterceptor = Interceptor { chain ->
+      val original: Request = chain.request()
+      val request =
+          original
+              .newBuilder()
+              .header("Cookie", "auth_token=${BuildConfig.AUTH_TOKEN}")
+              .method(original.method, original.body)
+              .build()
+      chain.proceed(request)
+    }
+
+    return OkHttpClient.Builder().addInterceptor(headerInterceptor).build()
+  }
+
+  @Provides
+  @Singleton
+  fun provideMoctaleApi(client: OkHttpClient): MoctaleApi =
       Retrofit.Builder()
           .baseUrl(Constants.BASE_URL)
+          .client(client)
           .addConverterFactory(GsonConverterFactory.create())
           .build()
           .create(MoctaleApi::class.java)
@@ -36,6 +59,13 @@ object Module {
 
   @Provides
   @Singleton
-  fun provideMoctaleApiUseCase(exploreUseCase: ExploreUseCase, contentUseCase: ContentUseCase) =
-      MoctaleApiUseCase(exploreUseCase, contentUseCase)
+  fun providePersonUseCase(moctaleApi: MoctaleApi) = PersonUseCase(moctaleApi = moctaleApi)
+
+  @Provides
+  @Singleton
+  fun provideMoctaleApiUseCase(
+      exploreUseCase: ExploreUseCase,
+      contentUseCase: ContentUseCase,
+      personUseCase: PersonUseCase,
+  ) = MoctaleApiUseCase(exploreUseCase, contentUseCase, personUseCase)
 }

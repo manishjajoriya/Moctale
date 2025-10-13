@@ -1,4 +1,4 @@
-package com.manishjajoriya.moctale.presentation.contentScreen.components
+package com.manishjajoriya.moctale.presentation.components
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.manishjajoriya.moctale.ui.theme.Typography
 
 @Composable
-fun ContentSection(title: String, showDivider: Boolean = true, content: @Composable () -> Unit) {
+fun Section(title: String, showDivider: Boolean = true, content: @Composable () -> Unit) {
   Spacer(modifier = Modifier.height(12.dp))
   Text(
       text = title,
@@ -21,8 +21,8 @@ fun ContentSection(title: String, showDivider: Boolean = true, content: @Composa
   )
   Spacer(modifier = Modifier.height(12.dp))
   content()
-  Spacer(modifier = Modifier.height(28.dp))
   if (showDivider) {
+    Spacer(modifier = Modifier.height(28.dp))
     HorizontalDivider(modifier = Modifier.fillMaxWidth())
   }
 }

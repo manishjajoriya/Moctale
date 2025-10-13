@@ -28,11 +28,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.manishjajoriya.moctale.R
+import com.manishjajoriya.moctale.navgraph.Routes
+import com.manishjajoriya.moctale.presentation.components.Section
 import com.manishjajoriya.moctale.presentation.contentScreen.components.Banner
 import com.manishjajoriya.moctale.presentation.contentScreen.components.CategoryChip
 import com.manishjajoriya.moctale.presentation.contentScreen.components.ContentInfo
-import com.manishjajoriya.moctale.presentation.contentScreen.components.ContentSection
 import com.manishjajoriya.moctale.presentation.contentScreen.components.CustomButton
 import com.manishjajoriya.moctale.presentation.contentScreen.components.GenresText
 import com.manishjajoriya.moctale.presentation.contentScreen.components.MoctaleMeter
@@ -44,7 +46,12 @@ import com.manishjajoriya.moctale.ui.theme.Typography
 import kotlin.math.roundToInt
 
 @Composable
-fun ContentScreen(paddingValues: PaddingValues, slug: String, viewModel: ContentViewModel) {
+fun ContentScreen(
+    paddingValues: PaddingValues,
+    slug: String,
+    viewModel: ContentViewModel,
+    navController: NavHostController,
+) {
   val loading by viewModel.loading.collectAsState()
   val content by viewModel.content.collectAsState()
   val reviewColors =
@@ -90,7 +97,7 @@ fun ContentScreen(paddingValues: PaddingValues, slug: String, viewModel: Content
           )
 
           // Overview Section + Category Buttons
-          ContentSection(title = "Overview") {
+          Section(title = "Overview") {
             Text(text = content.description, style = Typography.bodyMedium.copy(color = Color.Gray))
             Spacer(modifier = Modifier.height(12.dp))
             FlowRow(
@@ -104,7 +111,7 @@ fun ContentScreen(paddingValues: PaddingValues, slug: String, viewModel: Content
           // Vibe Chart
           if (!content.genreList.isNullOrEmpty()) {
             val genres = content.genreList
-            ContentSection(title = "Vibe Chart") {
+            Section(title = "Vibe Chart") {
               VibeChart(modifier = Modifier.size(260.dp), genres = genres)
               Spacer(modifier = Modifier.height(12.dp))
               FlowRow(
@@ -120,7 +127,7 @@ fun ContentScreen(paddingValues: PaddingValues, slug: String, viewModel: Content
           // Cast Section
           if (!content.actorList.isNullOrEmpty()) {
             val actors = content.actorList
-            ContentSection(title = "Cast") {
+            Section(title = "Cast") {
               LazyRow(
                   modifier = Modifier.fillMaxWidth().heightIn(min = 184.dp),
                   horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -130,6 +137,9 @@ fun ContentScreen(paddingValues: PaddingValues, slug: String, viewModel: Content
                       imageUrl = actor.image,
                       name = actor.name,
                       label = actor.character ?: "Actor",
+                      onClick = {
+                        navController.navigate(Routes.PersonScreen.route + "/${actor.slug}")
+                      },
                   )
                 }
               }
@@ -138,14 +148,21 @@ fun ContentScreen(paddingValues: PaddingValues, slug: String, viewModel: Content
 
           // Crew Section
           content.crewList.let { crews ->
-            ContentSection(title = "Crew") {
+            Section(title = "Crew") {
               LazyRow(
                   modifier = Modifier.fillMaxWidth().heightIn(min = 184.dp),
                   horizontalArrangement = Arrangement.spacedBy(12.dp),
               ) {
                 itemsIndexed(crews, key = { _, crew -> crew.slug }) { _, crew ->
                   val label = crew.roleList.joinToString(", ")
-                  ProfileCircle(imageUrl = crew.image, name = crew.name, label = label)
+                  ProfileCircle(
+                      imageUrl = crew.image,
+                      name = crew.name,
+                      label = label,
+                      onClick = {
+                        navController.navigate(Routes.PersonScreen.route + "/${crew.slug}")
+                      },
+                  )
                 }
               }
             }
@@ -154,7 +171,7 @@ fun ContentScreen(paddingValues: PaddingValues, slug: String, viewModel: Content
           // Tickets On
           if (content.ticketingSiteList.isNotEmpty()) {
             val ticketList = content.ticketingSiteList
-            ContentSection(title = "Ticket On") {
+            Section(title = "Ticket On") {
               LazyRow(
                   modifier = Modifier.fillMaxWidth(),
                   horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start),
@@ -167,7 +184,7 @@ fun ContentScreen(paddingValues: PaddingValues, slug: String, viewModel: Content
           }
 
           // Moctale Meter
-          ContentSection(title = "Moctale Meter") {
+          Section(title = "Moctale Meter") {
             val typeOfReview = listOf("Perfection", "Go fot it", "Timepass", "Skip")
             val reviewCount =
                 listOf(
