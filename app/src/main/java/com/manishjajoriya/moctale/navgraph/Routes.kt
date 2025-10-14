@@ -6,4 +6,6 @@ sealed class Routes(val route: String) {
   object ContentScreen : Routes(route = "content")
 
   object PersonScreen : Routes(route = "person")
+
+  object ScheduleScreen : Routes(route = "schedule")
 }

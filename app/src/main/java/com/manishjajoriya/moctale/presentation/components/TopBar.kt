@@ -4,13 +4,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -25,12 +23,7 @@ import com.manishjajoriya.moctale.R
 
 @Composable
 fun TopBar() {
-  Column(
-      modifier =
-          Modifier.padding(
-              top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding(),
-          )
-  ) {
+  Column(modifier = Modifier.statusBarsPadding()) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,

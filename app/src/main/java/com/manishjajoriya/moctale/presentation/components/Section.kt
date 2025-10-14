@@ -22,7 +22,7 @@ fun Section(title: String, showDivider: Boolean = true, content: @Composable () 
   Spacer(modifier = Modifier.height(12.dp))
   content()
   if (showDivider) {
-    Spacer(modifier = Modifier.height(28.dp))
+    Spacer(modifier = Modifier.height(12.dp))
     HorizontalDivider(modifier = Modifier.fillMaxWidth())
   }
 }

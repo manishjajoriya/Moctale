@@ -6,11 +6,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -26,7 +24,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.manishjajoriya.moctale.R
@@ -69,14 +66,8 @@ fun ContentScreen(
       item {
         Column(
             modifier =
-                Modifier.offset(y = (-40).dp)
-                    .padding(
-                        start =
-                            paddingValues.calculateStartPadding(
-                                layoutDirection = LayoutDirection.Ltr
-                            )
-                    )
-                    .padding(horizontal = 12.dp),
+                Modifier.padding(horizontal = 12.dp)
+                    .padding(bottom = paddingValues.calculateBottomPadding()),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
           ContentInfo(content = content)
@@ -202,9 +193,7 @@ fun ContentScreen(
                 )
             val totalReviewCount = content.countTotalReview
 
-            Box(
-                contentAlignment = Alignment.BottomCenter,
-            ) {
+            Box(contentAlignment = Alignment.BottomCenter) {
               MoctaleMeter(
                   modifier = Modifier.size(300.dp),
                   reviewCount = reviewCount,
@@ -239,6 +228,7 @@ fun ContentScreen(
               }
             }
           }
+          Spacer(modifier = Modifier.height(12.dp))
         }
       }
     }

@@ -27,6 +27,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.manishjajoriya.moctale.navgraph.Routes
 import com.manishjajoriya.moctale.presentation.components.MoviePoster
 import com.manishjajoriya.moctale.presentation.components.Section
 import com.manishjajoriya.moctale.presentation.personScreen.components.PersonPic
@@ -36,7 +38,12 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun PersonScreen(paddingValues: PaddingValues, viewModel: PersonViewModel, name: String) {
+fun PersonScreen(
+    paddingValues: PaddingValues,
+    viewModel: PersonViewModel,
+    name: String,
+    navController: NavController,
+) {
 
   val person by viewModel.person.collectAsState()
   val personContent by viewModel.personContent.collectAsState()
@@ -104,7 +111,9 @@ fun PersonScreen(paddingValues: PaddingValues, viewModel: PersonViewModel, name:
                 }
               }
             }
-            Section(title = "Biography", showDivider = false) { Text(text = person.bio) }
+            Section(title = "Biography", showDivider = false) {
+              Text(text = person.bio, style = Typography.bodyLarge)
+            }
           }
         }
         item(span = { GridItemSpan(maxLineSpan) }) {
@@ -114,8 +123,12 @@ fun PersonScreen(paddingValues: PaddingValues, viewModel: PersonViewModel, name:
               style = Typography.titleLarge.copy(fontWeight = FontWeight.SemiBold),
           )
         }
-        itemsIndexed(personContent.data) { index, data -> MoviePoster(data = data) {} }
-        item(span = { GridItemSpan(maxLineSpan) }) { Spacer(modifier = Modifier.height(24.dp)) }
+        itemsIndexed(personContent.data) { index, data ->
+          MoviePoster(data = data) { slug ->
+            navController.navigate(Routes.ContentScreen.route + "/$slug")
+          }
+        }
+        item(span = { GridItemSpan(maxLineSpan) }) {}
       }
     }
   }

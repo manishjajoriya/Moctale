@@ -73,6 +73,7 @@ fun ExploreScreen(
           )
         }
       }
+      item(span = { GridItemSpan(maxLineSpan) }) {}
     }
   }
 }
