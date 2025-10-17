@@ -13,13 +13,15 @@ import com.manishjajoriya.moctale.presentation.exploreScreen.ExploreViewModel
 import com.manishjajoriya.moctale.presentation.personScreen.PersonScreen
 import com.manishjajoriya.moctale.presentation.personScreen.PersonViewModel
 import com.manishjajoriya.moctale.presentation.scheduleScreen.ScheduleScreen
+import com.manishjajoriya.moctale.presentation.scheduleScreen.ScheduleViewModel
 
 @Composable
 fun NavGraph(paddingValues: PaddingValues, navController: NavHostController) {
   val exploreViewModel: ExploreViewModel = hiltViewModel()
   val contentViewModel: ContentViewModel = hiltViewModel()
   val personViewModel: PersonViewModel = hiltViewModel()
-  //    val startDestination = Routes.PersonScreen.route + "/rishab-shetty"
+  val scheduleViewModel: ScheduleViewModel = hiltViewModel()
+  //  val startDestination = Routes.ScheduleScreen.route
   val startDestination = Routes.ExploreScreen.route
 
   NavHost(navController = navController, startDestination = startDestination) {
@@ -51,6 +53,12 @@ fun NavGraph(paddingValues: PaddingValues, navController: NavHostController) {
       )
     }
 
-    composable(Routes.ScheduleScreen.route) { ScheduleScreen(paddingValues = paddingValues) }
+    composable(Routes.ScheduleScreen.route) {
+      ScheduleScreen(
+          paddingValues = paddingValues,
+          viewModel = scheduleViewModel,
+          navController = navController,
+      )
+    }
   }
 }

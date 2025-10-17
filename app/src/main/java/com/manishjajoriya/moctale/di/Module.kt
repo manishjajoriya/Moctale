@@ -7,6 +7,7 @@ import com.manishjajoriya.moctale.domain.usecase.ContentUseCase
 import com.manishjajoriya.moctale.domain.usecase.ExploreUseCase
 import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
 import com.manishjajoriya.moctale.domain.usecase.PersonUseCase
+import com.manishjajoriya.moctale.domain.usecase.ScheduleUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -63,9 +64,14 @@ object Module {
 
   @Provides
   @Singleton
+  fun provideScheduleUseCase(moctaleApi: MoctaleApi) = ScheduleUseCase(moctaleApi = moctaleApi)
+
+  @Provides
+  @Singleton
   fun provideMoctaleApiUseCase(
       exploreUseCase: ExploreUseCase,
       contentUseCase: ContentUseCase,
       personUseCase: PersonUseCase,
-  ) = MoctaleApiUseCase(exploreUseCase, contentUseCase, personUseCase)
+      scheduleUseCase: ScheduleUseCase,
+  ) = MoctaleApiUseCase(exploreUseCase, contentUseCase, personUseCase, scheduleUseCase)
 }

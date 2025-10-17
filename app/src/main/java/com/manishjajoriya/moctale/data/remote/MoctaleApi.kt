@@ -24,5 +24,6 @@ interface MoctaleApi {
   suspend fun schedule(
       @Query("timeFilter") timeFilter: String,
       @Query("page") page: Int,
+      @Query("releaseType") releaseType: String?,
   ): Schedule
 }

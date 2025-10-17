@@ -70,3 +70,34 @@ fun MoviePoster(
     Text(text = "as ${data.character}.", style = Typography.labelMedium, color = Color.Gray)
   }
 }
+
+@Composable
+fun MoviePoster(
+    modifier: Modifier = Modifier,
+    name: String,
+    imageUrl: String? = null,
+    label: String,
+    slug: String,
+    onClick: (String) -> Unit,
+) {
+  Column(modifier = modifier.clickable(onClick = { onClick(slug) })) {
+    if (imageUrl != null) {
+      AsyncImage(
+          model = imageUrl,
+          contentDescription = imageUrl,
+          modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)),
+          contentScale = ContentScale.Crop,
+      )
+    } else {
+      Image(
+          painter = painterResource(R.drawable.ic_placeholder_move),
+          contentDescription = name,
+          modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)),
+          contentScale = ContentScale.Crop,
+      )
+    }
+    Spacer(modifier = Modifier.height(8.dp))
+    Text(text = name, style = Typography.titleMedium)
+    Text(text = label, style = Typography.labelMedium, color = Color.Gray)
+  }
+}
