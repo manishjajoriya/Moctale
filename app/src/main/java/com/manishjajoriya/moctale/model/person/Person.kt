@@ -13,3 +13,27 @@ data class Person(
     val image: String,
     val name: String,
 )
+
+data class PersonContent(
+    val count: Int,
+    @SerializedName("current_page") val currentPage: Int,
+    val `data`: List<Data>,
+    @SerializedName("next_page") val nextPage: Any,
+    @SerializedName("previous_page") val previousPage: Any,
+    @SerializedName("total_pages") val totalPages: Int,
+)
+
+data class Data(
+    val character: String,
+    val content: Content,
+    @SerializedName("role_list") val roleList: List<String>,
+)
+
+data class Content(
+    val banner: String,
+    val image: String?,
+    @SerializedName("is_show") val isShow: Boolean,
+    val name: String,
+    val slug: String,
+    val year: Int,
+)

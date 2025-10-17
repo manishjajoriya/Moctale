@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.manishjajoriya.moctale.R
 import com.manishjajoriya.moctale.model.explore.Content
-import com.manishjajoriya.moctale.model.person.content.Data
+import com.manishjajoriya.moctale.model.person.Data
 import com.manishjajoriya.moctale.ui.theme.Typography
 
 @Composable

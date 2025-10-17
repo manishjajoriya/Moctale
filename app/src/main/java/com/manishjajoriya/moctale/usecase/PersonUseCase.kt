@@ -1,7 +1,7 @@
 package com.manishjajoriya.moctale.usecase
 
 import com.manishjajoriya.moctale.model.person.Person
-import com.manishjajoriya.moctale.model.person.content.PersonContent
+import com.manishjajoriya.moctale.model.person.PersonContent
 import com.manishjajoriya.moctale.remote.MoctaleApi
 import jakarta.inject.Inject
 

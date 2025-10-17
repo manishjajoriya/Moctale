@@ -3,7 +3,7 @@ package com.manishjajoriya.moctale.remote
 import com.manishjajoriya.moctale.model.content.Content
 import com.manishjajoriya.moctale.model.explore.ExploreItem
 import com.manishjajoriya.moctale.model.person.Person
-import com.manishjajoriya.moctale.model.person.content.PersonContent
+import com.manishjajoriya.moctale.model.person.PersonContent
 import retrofit2.http.GET
 import retrofit2.http.Path
 
