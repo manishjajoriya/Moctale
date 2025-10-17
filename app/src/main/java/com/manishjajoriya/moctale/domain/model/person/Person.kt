@@ -1,4 +1,4 @@
-package com.manishjajoriya.moctale.model.person
+package com.manishjajoriya.moctale.domain.model.person
 
 import com.google.gson.annotations.SerializedName
 

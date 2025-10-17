@@ -1,4 +1,4 @@
-package com.manishjajoriya.moctale.usecase
+package com.manishjajoriya.moctale.domain.usecase
 
 data class MoctaleApiUseCase(
     val exploreUseCase: ExploreUseCase,

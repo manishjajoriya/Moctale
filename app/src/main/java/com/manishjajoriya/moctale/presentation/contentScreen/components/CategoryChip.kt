@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.manishjajoriya.moctale.model.content.Category
+import com.manishjajoriya.moctale.domain.model.content.Category
 import com.manishjajoriya.moctale.ui.theme.Typography
 
 @Composable

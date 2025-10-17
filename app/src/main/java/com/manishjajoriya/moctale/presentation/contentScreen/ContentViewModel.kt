@@ -2,8 +2,8 @@ package com.manishjajoriya.moctale.presentation.contentScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.manishjajoriya.moctale.model.content.Content
-import com.manishjajoriya.moctale.usecase.MoctaleApiUseCase
+import com.manishjajoriya.moctale.domain.model.content.Content
+import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers

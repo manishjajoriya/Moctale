@@ -26,7 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
-import com.manishjajoriya.moctale.model.explore.ExploreItem
+import com.manishjajoriya.moctale.domain.model.explore.ExploreItem
 import com.manishjajoriya.moctale.navgraph.Routes
 import com.manishjajoriya.moctale.presentation.components.MoviePoster
 import com.manishjajoriya.moctale.ui.theme.Typography

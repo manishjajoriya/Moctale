@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import coil3.compose.AsyncImage
 import com.manishjajoriya.moctale.R
-import com.manishjajoriya.moctale.model.content.TicketingSite
+import com.manishjajoriya.moctale.domain.model.content.TicketingSite
 
 @Composable
 fun TicketButton(ticketingSite: TicketingSite) {

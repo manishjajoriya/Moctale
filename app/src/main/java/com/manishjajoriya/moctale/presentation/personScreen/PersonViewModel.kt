@@ -2,9 +2,9 @@ package com.manishjajoriya.moctale.presentation.personScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.manishjajoriya.moctale.model.person.Person
-import com.manishjajoriya.moctale.model.person.PersonContent
-import com.manishjajoriya.moctale.usecase.MoctaleApiUseCase
+import com.manishjajoriya.moctale.domain.model.person.Person
+import com.manishjajoriya.moctale.domain.model.person.PersonContent
+import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers

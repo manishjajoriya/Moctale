@@ -2,11 +2,11 @@ package com.manishjajoriya.moctale.di
 
 import com.manishjajoriya.moctale.BuildConfig
 import com.manishjajoriya.moctale.Constants
-import com.manishjajoriya.moctale.remote.MoctaleApi
-import com.manishjajoriya.moctale.usecase.ContentUseCase
-import com.manishjajoriya.moctale.usecase.ExploreUseCase
-import com.manishjajoriya.moctale.usecase.MoctaleApiUseCase
-import com.manishjajoriya.moctale.usecase.PersonUseCase
+import com.manishjajoriya.moctale.data.remote.MoctaleApi
+import com.manishjajoriya.moctale.domain.usecase.ContentUseCase
+import com.manishjajoriya.moctale.domain.usecase.ExploreUseCase
+import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
+import com.manishjajoriya.moctale.domain.usecase.PersonUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

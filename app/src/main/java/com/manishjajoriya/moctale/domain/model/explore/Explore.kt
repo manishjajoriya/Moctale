@@ -1,4 +1,4 @@
-package com.manishjajoriya.moctale.model.explore
+package com.manishjajoriya.moctale.domain.model.explore
 
 import com.google.gson.annotations.SerializedName
 

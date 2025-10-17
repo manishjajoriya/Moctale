@@ -14,7 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
-import com.manishjajoriya.moctale.model.content.Genre
+import com.manishjajoriya.moctale.domain.model.content.Genre
 import com.manishjajoriya.moctale.ui.theme.Typography
 
 @Composable

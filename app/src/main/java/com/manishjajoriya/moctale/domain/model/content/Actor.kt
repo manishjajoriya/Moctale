@@ -1,4 +1,4 @@
-package com.manishjajoriya.moctale.model.content
+package com.manishjajoriya.moctale.domain.model.content
 
 data class Actor(
     val character: String?,

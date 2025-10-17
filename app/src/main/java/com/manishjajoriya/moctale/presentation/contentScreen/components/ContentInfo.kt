@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.manishjajoriya.moctale.model.content.Content
+import com.manishjajoriya.moctale.domain.model.content.Content
 import com.manishjajoriya.moctale.ui.theme.Typography
 
 @Composable

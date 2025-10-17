@@ -14,7 +14,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.manishjajoriya.moctale.R
-import com.manishjajoriya.moctale.model.content.Genre
+import com.manishjajoriya.moctale.domain.model.content.Genre
 
 @Composable
 fun VibeChart(modifier: Modifier = Modifier, genres: List<Genre>) {
