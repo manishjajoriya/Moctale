@@ -10,7 +10,7 @@ class PersonUseCase @Inject constructor(private val moctaleApi: MoctaleApi) {
     return moctaleApi.person(name = name)
   }
 
-  suspend fun personContent(name: String): PersonContent {
-    return moctaleApi.personContent(name = name)
+  suspend fun personContent(name: String, page : Int?): PersonContent {
+    return moctaleApi.personContent(name = name, page = page)
   }
 }

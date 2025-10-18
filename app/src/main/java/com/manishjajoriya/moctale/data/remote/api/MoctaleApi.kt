@@ -18,7 +18,7 @@ interface MoctaleApi {
   @GET("library/person/{name}") suspend fun person(@Path("name") name: String): Person
 
   @GET("library/person/{name}/content")
-  suspend fun personContent(@Path("name") name: String): PersonContent
+  suspend fun personContent(@Path("name") name: String, @Query("page") page: Int?): PersonContent
 
   @GET("schedule")
   suspend fun schedule(

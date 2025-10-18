@@ -21,7 +21,7 @@ fun NavGraph(paddingValues: PaddingValues, navController: NavHostController) {
   val contentViewModel: ContentViewModel = hiltViewModel()
   val personViewModel: PersonViewModel = hiltViewModel()
   val scheduleViewModel: ScheduleViewModel = hiltViewModel()
-  //  val startDestination = Routes.ScheduleScreen.route
+//    val startDestination = Routes.PersonScreen.route + "/varun-dhawan"
   val startDestination = Routes.ExploreScreen.route
 
   NavHost(navController = navController, startDestination = startDestination) {

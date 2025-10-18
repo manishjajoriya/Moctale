@@ -11,4 +11,6 @@ interface MoctaleRepository {
       timeFilter: TimeFilter,
       releaseType: String?,
   ): Flow<PagingData<UiScheduleItem>>
+
+  fun getPersonContentData(name : String): Flow<PagingData<com.manishjajoriya.moctale.domain.model.person.Data>>
 }
