@@ -194,12 +194,25 @@ fun ContentScreen(
             val totalReviewCount = content.countTotalReview
 
             Box(contentAlignment = Alignment.BottomCenter) {
-              MoctaleMeter(
-                  modifier = Modifier.size(300.dp),
-                  reviewCount = reviewCount,
-                  reviewPercentage = reviewPercentage,
-                  totalReviewCount = totalReviewCount,
-              )
+              if (totalReviewCount != 0) {
+                MoctaleMeter(
+                    modifier = Modifier.size(300.dp),
+                    reviewCount = reviewCount,
+                    reviewPercentage = reviewPercentage,
+                    totalReviewCount = totalReviewCount,
+                )
+              } else {
+                Column(
+                    modifier = Modifier.size(300.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                  Text(
+                      text = "No Reviews Yet",
+                      style = Typography.titleLarge.copy(color = Color.Gray),
+                  )
+                }
+              }
               Box(
                   contentAlignment = Alignment.BottomCenter,
               ) {
