@@ -2,7 +2,7 @@ package com.manishjajoriya.moctale.domain.usecase
 
 import com.manishjajoriya.moctale.domain.model.person.Person
 import com.manishjajoriya.moctale.domain.model.person.PersonContent
-import com.manishjajoriya.moctale.data.remote.MoctaleApi
+import com.manishjajoriya.moctale.data.remote.api.MoctaleApi
 import jakarta.inject.Inject
 
 class PersonUseCase @Inject constructor(private val moctaleApi: MoctaleApi) {

@@ -2,7 +2,9 @@ package com.manishjajoriya.moctale.di
 
 import com.manishjajoriya.moctale.BuildConfig
 import com.manishjajoriya.moctale.Constants
-import com.manishjajoriya.moctale.data.remote.MoctaleApi
+import com.manishjajoriya.moctale.data.remote.api.MoctaleApi
+import com.manishjajoriya.moctale.data.repository.MoctaleRepositoryImpl
+import com.manishjajoriya.moctale.domain.repository.MoctaleRepository
 import com.manishjajoriya.moctale.domain.usecase.ContentUseCase
 import com.manishjajoriya.moctale.domain.usecase.ExploreUseCase
 import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
@@ -74,4 +76,9 @@ object Module {
       personUseCase: PersonUseCase,
       scheduleUseCase: ScheduleUseCase,
   ) = MoctaleApiUseCase(exploreUseCase, contentUseCase, personUseCase, scheduleUseCase)
+
+  @Provides
+  @Singleton
+  fun provideMoctaleRepository(moctaleApiUseCase: MoctaleApiUseCase): MoctaleRepository =
+      MoctaleRepositoryImpl(moctaleApiUseCase = moctaleApiUseCase)
 }

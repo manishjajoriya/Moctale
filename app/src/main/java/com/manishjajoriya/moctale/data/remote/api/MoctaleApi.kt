@@ -1,4 +1,4 @@
-package com.manishjajoriya.moctale.data.remote
+package com.manishjajoriya.moctale.data.remote.api
 
 import com.manishjajoriya.moctale.domain.model.content.Content
 import com.manishjajoriya.moctale.domain.model.explore.ExploreItem
