@@ -15,17 +15,22 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.manishjajoriya.moctale.R
 import com.manishjajoriya.moctale.ui.theme.Background
 import com.manishjajoriya.moctale.ui.theme.Typography
 
 @Composable
-fun BottomBar(onClick: (String) -> Unit) {
+fun BottomBar(navController: NavController, onClick: (String) -> Unit) {
+  val navBackStackEntry by navController.currentBackStackEntryAsState()
+  val currentRoute = navBackStackEntry?.destination?.route
 
   Column(modifier = Modifier.background(Background)) {
     HorizontalDivider(modifier = Modifier.fillMaxWidth(), thickness = 2.dp)
@@ -40,24 +45,51 @@ fun BottomBar(onClick: (String) -> Unit) {
                 ),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-      BottomBarButton(icon = R.drawable.ic_explore_icon, title = "explore", onClick = onClick)
-      BottomBarButton(icon = R.drawable.ic_schedule_icon, title = "schedule", onClick = onClick)
-      BottomBarButton(icon = R.drawable.ic_browse_icon, title = "browse", onClick = onClick)
-      BottomBarButton(icon = R.drawable.ic_clubs_icon, title = "clubs", onClick = onClick)
-      BottomBarButton(icon = R.drawable.ic_profile_icon, title = "profile", onClick = onClick)
+      BottomBarButton(
+          icon = R.drawable.ic_explore_icon,
+          title = "explore",
+          currentRoute,
+          onClick = onClick,
+      )
+      BottomBarButton(
+          icon = R.drawable.ic_schedule_icon,
+          title = "schedule",
+          currentRoute,
+          onClick = onClick,
+      )
+      BottomBarButton(
+          icon = R.drawable.ic_browse_icon,
+          title = "browse",
+          currentRoute,
+          onClick = onClick,
+      )
+      BottomBarButton(
+          icon = R.drawable.ic_clubs_icon,
+          title = "clubs",
+          currentRoute,
+          onClick = onClick,
+      )
+      BottomBarButton(
+          icon = R.drawable.ic_profile_icon,
+          title = "profile",
+          currentRoute,
+          onClick = onClick,
+      )
     }
   }
 }
 
 @Composable
-fun BottomBarButton(icon: Int, title: String, onClick: (String) -> Unit) {
+fun BottomBarButton(icon: Int, title: String, currentRoute: String?, onClick: (String) -> Unit) {
   TextButton(
       onClick = { onClick(title) },
-      colors = ButtonDefaults.textButtonColors().copy(contentColor = Color.White),
+      colors =
+          ButtonDefaults.textButtonColors()
+              .copy(contentColor = if (currentRoute == title) Color.White else Color.Gray),
   ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
       Icon(painter = painterResource(icon), contentDescription = null)
-      Text(text = title, style = Typography.labelSmall)
+      Text(text = title.replaceFirstChar { it.uppercase() }, style = Typography.labelSmall)
     }
   }
 }

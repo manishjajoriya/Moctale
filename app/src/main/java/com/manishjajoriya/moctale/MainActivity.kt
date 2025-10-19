@@ -28,6 +28,7 @@ class MainActivity : ComponentActivity() {
             topBar = { TopBar(navController) },
             bottomBar = {
               BottomBar(
+                  navController,
                   onClick = { clickText ->
                     when (clickText) {
                       "explore" -> navController.navigate(Routes.ExploreScreen.route)
@@ -36,7 +37,7 @@ class MainActivity : ComponentActivity() {
                       "clubs" -> {}
                       "profile" -> {}
                     }
-                  }
+                  },
               )
             },
         ) { innerPadding ->
