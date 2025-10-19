@@ -1,4 +1,4 @@
-package com.manishjajoriya.moctale.data.remote.source
+package com.manishjajoriya.moctale.data.remote.source.schedule
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -7,9 +7,9 @@ import com.manishjajoriya.moctale.domain.model.schedule.TimeFilter
 import com.manishjajoriya.moctale.domain.usecase.ScheduleUseCase
 
 class SchedulePagingSource(
-    private val scheduleUseCase: ScheduleUseCase,
-    private val timeFilter: TimeFilter,
-    private val releaseType: String? = null,
+  private val scheduleUseCase: ScheduleUseCase,
+  private val timeFilter: TimeFilter,
+  private val releaseType: String? = null,
 ) : PagingSource<Int, Data>() {
 
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Data> {

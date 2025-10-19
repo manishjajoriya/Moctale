@@ -25,16 +25,16 @@ class MainActivity : ComponentActivity() {
         val navController = rememberNavController()
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            topBar = { TopBar() },
+            topBar = { TopBar(navController) },
             bottomBar = {
               BottomBar(
                   onClick = { clickText ->
                     when (clickText) {
-                      "Explore" -> navController.navigate(Routes.ExploreScreen.route)
-                      "Schedule" -> navController.navigate(Routes.ScheduleScreen.route)
-                      "Browse" -> {}
-                      "Clubs" -> {}
-                      "Profile" -> {}
+                      "explore" -> navController.navigate(Routes.ExploreScreen.route)
+                      "schedule" -> navController.navigate(Routes.ScheduleScreen.route)
+                      "browse" -> {}
+                      "clubs" -> {}
+                      "profile" -> {}
                     }
                   }
               )

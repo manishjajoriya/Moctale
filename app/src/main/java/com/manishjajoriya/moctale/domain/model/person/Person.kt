@@ -24,7 +24,7 @@ data class PersonContent(
 )
 
 data class Data(
-    val character: String,
+    val character: String?,
     val content: Content,
     @SerializedName("role_list") val roleList: List<String>,
 )

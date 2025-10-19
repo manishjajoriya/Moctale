@@ -4,5 +4,6 @@ data class MoctaleApiUseCase(
     val exploreUseCase: ExploreUseCase,
     val contentUseCase: ContentUseCase,
     val personUseCase: PersonUseCase,
-    val scheduleUseCase: ScheduleUseCase
+    val scheduleUseCase: ScheduleUseCase,
+    val searchUseCase: SearchUseCase
 )

@@ -5,8 +5,11 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.insertSeparators
 import androidx.paging.map
-import com.manishjajoriya.moctale.data.remote.source.PersonContentPagingSource
-import com.manishjajoriya.moctale.data.remote.source.SchedulePagingSource
+import com.manishjajoriya.moctale.data.remote.source.person.PersonContentPagingSource
+import com.manishjajoriya.moctale.data.remote.source.schedule.SchedulePagingSource
+import com.manishjajoriya.moctale.data.remote.source.search.SearchContentPagingSource
+import com.manishjajoriya.moctale.data.remote.source.search.SearchPersonPagingSource
+import com.manishjajoriya.moctale.data.remote.source.search.SearchUserPagingSource
 import com.manishjajoriya.moctale.domain.model.schedule.Data
 import com.manishjajoriya.moctale.domain.model.schedule.TimeFilter
 import com.manishjajoriya.moctale.domain.model.schedule.UiScheduleItem
@@ -77,6 +80,60 @@ class MoctaleRepositoryImpl @Inject constructor(private val moctaleApiUseCase: M
                   personUseCase = moctaleApiUseCase.personUseCase,
                   name = name,
               )
+            },
+        )
+        .flow
+  }
+
+  override fun getSearchContentData(
+      searchTerm: String
+  ): Flow<PagingData<com.manishjajoriya.moctale.domain.model.search.content.Data>> {
+    return Pager(
+            config =
+                PagingConfig(
+                    pageSize = 20,
+                    prefetchDistance = 5,
+                    enablePlaceholders = false,
+                    initialLoadSize = 20,
+                ),
+            pagingSourceFactory = {
+              SearchContentPagingSource(searchUseCase = moctaleApiUseCase.searchUseCase, searchTerm)
+            },
+        )
+        .flow
+  }
+
+  override fun getSearchPersonData(
+      searchTerm: String
+  ): Flow<PagingData<com.manishjajoriya.moctale.domain.model.search.person.Data>> {
+    return Pager(
+            config =
+                PagingConfig(
+                    pageSize = 20,
+                    prefetchDistance = 5,
+                    enablePlaceholders = false,
+                    initialLoadSize = 20,
+                ),
+            pagingSourceFactory = {
+              SearchPersonPagingSource(searchUseCase = moctaleApiUseCase.searchUseCase, searchTerm)
+            },
+        )
+        .flow
+  }
+
+  override fun getSearchUserData(
+      searchTerm: String
+  ): Flow<PagingData<com.manishjajoriya.moctale.domain.model.search.user.Data>> {
+    return Pager(
+            config =
+                PagingConfig(
+                    pageSize = 20,
+                    prefetchDistance = 5,
+                    enablePlaceholders = false,
+                    initialLoadSize = 20,
+                ),
+            pagingSourceFactory = {
+              SearchUserPagingSource(searchUseCase = moctaleApiUseCase.searchUseCase, searchTerm)
             },
         )
         .flow

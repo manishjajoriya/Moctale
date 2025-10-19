@@ -8,4 +8,6 @@ sealed class Routes(val route: String) {
   object PersonScreen : Routes(route = "person")
 
   object ScheduleScreen : Routes(route = "schedule")
+
+  object SearchScreen : Routes(route = "search")
 }

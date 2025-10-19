@@ -14,15 +14,23 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.manishjajoriya.moctale.R
+import com.manishjajoriya.moctale.navgraph.Routes
 
 @Composable
-fun TopBar() {
+fun TopBar(navController: NavController) {
+  val navBackStackEntry by navController.currentBackStackEntryAsState()
+  val currentRoute = navBackStackEntry?.destination?.route
+  val isSearchScreen = currentRoute == Routes.SearchScreen.route
+
   Column(modifier = Modifier.statusBarsPadding()) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -50,10 +58,19 @@ fun TopBar() {
           verticalAlignment = Alignment.CenterVertically,
           horizontalArrangement = Arrangement.spacedBy(8.dp),
       ) {
-        IconButton(onClick = {}) {
+        IconButton(
+            onClick = {
+              if (isSearchScreen) navController.popBackStack()
+              else navController.navigate(Routes.SearchScreen.route)
+            }
+        ) {
           Icon(
-              painter = painterResource(R.drawable.ic_search_icon),
-              contentDescription = "search",
+              painter =
+                  painterResource(
+                      if (isSearchScreen) R.drawable.ic_cross_mark_icon
+                      else R.drawable.ic_search_icon
+                  ),
+              contentDescription = if (isSearchScreen) "close" else "search",
               tint = Color.Gray,
           )
         }

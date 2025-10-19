@@ -67,7 +67,9 @@ fun MoviePoster(
     Spacer(modifier = Modifier.height(8.dp))
     Text(text = data.content.name, style = Typography.titleMedium)
     Text(text = caption, style = Typography.labelMedium, color = Color.Gray)
-    Text(text = "as ${data.character}.", style = Typography.labelMedium, color = Color.Gray)
+    if (data.character != null) {
+      Text(text = "as ${data.character}.", style = Typography.labelMedium, color = Color.Gray)
+    }
   }
 }
 

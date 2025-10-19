@@ -40,11 +40,11 @@ fun BottomBar(onClick: (String) -> Unit) {
                 ),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-      BottomBarButton(icon = R.drawable.ic_explore_icon, title = "Explore", onClick = onClick)
-      BottomBarButton(icon = R.drawable.ic_schedule_icon, title = "Schedule", onClick = onClick)
-      BottomBarButton(icon = R.drawable.ic_browse_icon, title = "Browse", onClick = onClick)
-      BottomBarButton(icon = R.drawable.ic_clubs_icon, title = "Clubs", onClick = onClick)
-      BottomBarButton(icon = R.drawable.ic_profile_icon, title = "Profile", onClick = onClick)
+      BottomBarButton(icon = R.drawable.ic_explore_icon, title = "explore", onClick = onClick)
+      BottomBarButton(icon = R.drawable.ic_schedule_icon, title = "schedule", onClick = onClick)
+      BottomBarButton(icon = R.drawable.ic_browse_icon, title = "browse", onClick = onClick)
+      BottomBarButton(icon = R.drawable.ic_clubs_icon, title = "clubs", onClick = onClick)
+      BottomBarButton(icon = R.drawable.ic_profile_icon, title = "profile", onClick = onClick)
     }
   }
 }
