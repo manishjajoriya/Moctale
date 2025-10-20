@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -101,9 +102,13 @@ fun BrowseSheet(isShowBrowseSheet: Boolean, onDismissRequest: () -> Unit) {
                 painter = painterResource(data.image),
                 contentDescription = null,
                 modifier = Modifier.size(24.dp),
+                colorFilter = ColorFilter.tint(Color.Gray),
             )
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = data.displayName, style = Typography.labelMedium)
+            Text(
+                text = data.displayName,
+                style = Typography.labelMedium.copy(color = Color.White.copy(.8f)),
+            )
           }
         }
         item { Spacer(modifier = Modifier.height(8.dp)) }
