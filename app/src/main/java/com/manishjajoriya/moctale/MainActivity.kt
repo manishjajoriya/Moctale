@@ -6,11 +6,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.manishjajoriya.moctale.navgraph.NavGraph
 import com.manishjajoriya.moctale.navgraph.Routes
 import com.manishjajoriya.moctale.presentation.components.BottomBar
+import com.manishjajoriya.moctale.presentation.components.BrowseSheet
 import com.manishjajoriya.moctale.presentation.components.TopBar
 import com.manishjajoriya.moctale.ui.theme.MoctaleTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +28,7 @@ class MainActivity : ComponentActivity() {
     setContent {
       MoctaleTheme {
         val navController = rememberNavController()
+        var isShowBrowseSheet by remember { mutableStateOf(false) }
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = { TopBar(navController) },
@@ -33,7 +39,9 @@ class MainActivity : ComponentActivity() {
                     when (clickText) {
                       "explore" -> navController.navigate(Routes.ExploreScreen.route)
                       "schedule" -> navController.navigate(Routes.ScheduleScreen.route)
-                      "browse" -> {}
+                      "browse" -> {
+                        isShowBrowseSheet = true
+                      }
                       "clubs" -> {}
                       "profile" -> {}
                     }
@@ -41,6 +49,7 @@ class MainActivity : ComponentActivity() {
               )
             },
         ) { innerPadding ->
+          BrowseSheet(isShowBrowseSheet = isShowBrowseSheet) { isShowBrowseSheet = false }
           NavGraph(paddingValues = innerPadding, navController = navController)
         }
       }
