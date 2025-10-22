@@ -20,4 +20,6 @@ sealed class Routes(val route: String) {
   object CountryScreen : Routes(route = "country")
 
   object LanguageScreen : Routes(route = "language")
+
+  object FranchiseScreen : Routes(route = "franchise")
 }

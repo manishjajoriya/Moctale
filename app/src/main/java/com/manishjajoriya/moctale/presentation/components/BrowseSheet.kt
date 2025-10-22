@@ -45,23 +45,55 @@ fun BrowseSheet(
 ) {
   val data =
       listOf(
-          BrowseData("Category", R.drawable.ic_category_icon, Routes.CategoryScreen.route),
-          BrowseData("Genre", R.drawable.ic_genre_icon, Routes.GenreScreen.route),
-          BrowseData("Country", R.drawable.ic_country_icon, Routes.CountryScreen.route),
-          BrowseData("Language", R.drawable.ic_language_icon, Routes.LanguageScreen.route),
           BrowseData(
-              "Family Friendly",
-              R.drawable.ic_family_friendly_icon,
-              Routes.BrowseScreen.route + "/family-friendly//Family Friendly",
+              displayName = "Category",
+              image = R.drawable.ic_category_icon,
+              route = Routes.CategoryScreen.route,
           ),
-          BrowseData("Award Winners", R.drawable.ic_award_winners_icon),
-          BrowseData("Moctale Select", R.drawable.ic_moctale_select_icon),
-          BrowseData("Anime", R.drawable.ic_anime_icon),
-          BrowseData("Franchise", R.drawable.ic_franchise_icon),
+          BrowseData(
+              displayName = "Genre",
+              image = R.drawable.ic_genre_icon,
+              route = Routes.GenreScreen.route,
+          ),
+          BrowseData(
+              displayName = "Country",
+              image = R.drawable.ic_country_icon,
+              route = Routes.CountryScreen.route,
+          ),
+          BrowseData(
+              displayName = "Language",
+              image = R.drawable.ic_language_icon,
+              route = Routes.LanguageScreen.route,
+          ),
+          BrowseData(
+              displayName = "Family Friendly",
+              image = R.drawable.ic_family_friendly_icon,
+              route = Routes.BrowseScreen.route + "/family-friendly//Family Friendly",
+          ),
+          BrowseData(
+              displayName = "Award Winners",
+              image = R.drawable.ic_award_winners_icon,
+              route = Routes.BrowseScreen.route + "/award-winner//Award Winners",
+          ),
+          BrowseData(
+              displayName = "Moctale Select",
+              image = R.drawable.ic_moctale_select_icon,
+              route = Routes.BrowseScreen.route + "/moctale-select//Moctale Select",
+          ),
+          BrowseData(
+              displayName = "Anime",
+              image = R.drawable.ic_anime_icon,
+              route = Routes.BrowseScreen.route + "/anime//Anime",
+          ),
+          BrowseData(
+              displayName = "Franchise",
+              image = R.drawable.ic_franchise_icon,
+              route = Routes.FranchiseScreen.route,
+          ),
       )
   if (isShowBrowseSheet) {
     ModalBottomSheet(
-        containerColor = Color(0xFF080808),
+        containerColor = Color(0xFF080808).copy(.9f),
         onDismissRequest = onDismissRequest,
     ) {
       LazyVerticalGrid(
@@ -128,10 +160,10 @@ fun BrowseSheet(
             )
           }
         }
-        item { Spacer(modifier = Modifier.height(8.dp)) }
+        item(span = { GridItemSpan(maxLineSpan) }) { Spacer(modifier = Modifier.height(8.dp)) }
       }
     }
   }
 }
 
-data class BrowseData(val displayName: String, val image: Int, val route: String? = null)
+data class BrowseData(val displayName: String, val image: Int, val route: String)

@@ -14,6 +14,7 @@ import com.manishjajoriya.moctale.presentation.browseScreen.BrowseScreen
 import com.manishjajoriya.moctale.presentation.browseScreen.BrowseViewModel
 import com.manishjajoriya.moctale.presentation.browseScreen.category.CategoriesScreen
 import com.manishjajoriya.moctale.presentation.browseScreen.country.CountryScreen
+import com.manishjajoriya.moctale.presentation.browseScreen.franchise.FranchiseScreen
 import com.manishjajoriya.moctale.presentation.browseScreen.genre.GenreScreen
 import com.manishjajoriya.moctale.presentation.browseScreen.language.LanguageScreen
 import com.manishjajoriya.moctale.presentation.contentScreen.ContentScreen
@@ -140,5 +141,7 @@ fun NavGraph(paddingValues: PaddingValues, navController: NavHostController) {
           navController = navController,
       )
     }
+
+    composable(Routes.FranchiseScreen.route) { FranchiseScreen(paddingValues = paddingValues) }
   }
 }
