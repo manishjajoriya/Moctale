@@ -88,7 +88,7 @@ fun BrowseSheet(
           BrowseData(
               displayName = "Franchise",
               image = R.drawable.ic_franchise_icon,
-              route = Routes.FranchiseScreen.route,
+              route = Routes.ComingSoonScreen.route,
           ),
       )
   if (isShowBrowseSheet) {
@@ -141,7 +141,7 @@ fun BrowseSheet(
                       .clickable(
                           onClick = {
                             onDismissRequest()
-                            navController.navigate(data.route ?: "")
+                            navController.navigate(data.route)
                           }
                       ),
               verticalArrangement = Arrangement.Center,

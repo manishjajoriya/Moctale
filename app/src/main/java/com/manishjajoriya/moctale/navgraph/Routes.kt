@@ -21,5 +21,5 @@ sealed class Routes(val route: String) {
 
   object LanguageScreen : Routes(route = "language")
 
-  object FranchiseScreen : Routes(route = "franchise")
+  object ComingSoonScreen : Routes(route = "coming-soon")
 }

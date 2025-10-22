@@ -39,11 +39,9 @@ class MainActivity : ComponentActivity() {
                     when (clickText) {
                       "explore" -> navController.navigate(Routes.ExploreScreen.route)
                       "schedule" -> navController.navigate(Routes.ScheduleScreen.route)
-                      "browse" -> {
-                        isShowBrowseSheet = true
-                      }
-                      "clubs" -> {}
-                      "profile" -> {}
+                      "browse" -> isShowBrowseSheet = true
+                      "clubs" -> navController.navigate(Routes.ComingSoonScreen.route)
+                      "profile" -> navController.navigate(Routes.ComingSoonScreen.route)
                     }
                   },
               )

@@ -14,9 +14,9 @@ import com.manishjajoriya.moctale.presentation.browseScreen.BrowseScreen
 import com.manishjajoriya.moctale.presentation.browseScreen.BrowseViewModel
 import com.manishjajoriya.moctale.presentation.browseScreen.category.CategoriesScreen
 import com.manishjajoriya.moctale.presentation.browseScreen.country.CountryScreen
-import com.manishjajoriya.moctale.presentation.browseScreen.franchise.FranchiseScreen
 import com.manishjajoriya.moctale.presentation.browseScreen.genre.GenreScreen
 import com.manishjajoriya.moctale.presentation.browseScreen.language.LanguageScreen
+import com.manishjajoriya.moctale.presentation.comingSoonScreen.ComingSoonScree
 import com.manishjajoriya.moctale.presentation.contentScreen.ContentScreen
 import com.manishjajoriya.moctale.presentation.contentScreen.ContentViewModel
 import com.manishjajoriya.moctale.presentation.exploreScreen.ExploreScreen
@@ -36,7 +36,7 @@ fun NavGraph(paddingValues: PaddingValues, navController: NavHostController) {
   val scheduleViewModel: ScheduleViewModel = hiltViewModel()
   val searchViewModel: SearchViewModel = hiltViewModel()
   val browseViewModel: BrowseViewModel = hiltViewModel()
-  val startDestination = Routes.LanguageScreen.route
+  val startDestination = Routes.ExploreScreen.route
   //  val startDestination = Routes.CategoriesScreen.route
 
   NavHost(navController = navController, startDestination = startDestination) {
@@ -142,6 +142,6 @@ fun NavGraph(paddingValues: PaddingValues, navController: NavHostController) {
       )
     }
 
-    composable(Routes.FranchiseScreen.route) { FranchiseScreen(paddingValues = paddingValues) }
+    composable(Routes.ComingSoonScreen.route) { ComingSoonScree(paddingValues = paddingValues) }
   }
 }

@@ -1,4 +1,4 @@
-package com.manishjajoriya.moctale.presentation.browseScreen.franchise
+package com.manishjajoriya.moctale.presentation.comingSoonScreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,8 +12,7 @@ import androidx.compose.ui.Modifier
 import com.manishjajoriya.moctale.ui.theme.Typography
 
 @Composable
-fun FranchiseScreen(paddingValues: PaddingValues) {
-
+fun ComingSoonScree(paddingValues: PaddingValues) {
   Column(
       modifier = Modifier.padding(paddingValues).fillMaxSize(),
       horizontalAlignment = Alignment.CenterHorizontally,
