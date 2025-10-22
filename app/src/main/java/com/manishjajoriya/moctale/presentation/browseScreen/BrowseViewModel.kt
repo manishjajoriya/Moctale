@@ -85,7 +85,7 @@ constructor(
     }
   }
 
-  fun fetchBrowseData(browseSlug: String, category: String) {
+  fun fetchBrowseData(browseSlug: String, category: String?) {
     _browseData.value =
         moctaleRepository
             .getBrowseData(browseScreen = browseSlug, category)

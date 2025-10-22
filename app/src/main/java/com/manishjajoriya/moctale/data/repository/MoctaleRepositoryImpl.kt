@@ -142,7 +142,7 @@ class MoctaleRepositoryImpl @Inject constructor(private val moctaleApiUseCase: M
 
   override fun getBrowseData(
       browseScreen: String,
-      category: String,
+      category: String?,
   ): Flow<PagingData<com.manishjajoriya.moctale.domain.model.browse.Data>> {
     return Pager(
             config =

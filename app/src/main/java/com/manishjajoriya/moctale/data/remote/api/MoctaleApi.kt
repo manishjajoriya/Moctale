@@ -62,7 +62,7 @@ interface MoctaleApi {
   @GET("library/{browseScreen}/{category}/content")
   suspend fun categoryData(
       @Path("browseScreen") browseScreen: String,
-      @Path("category") category: String,
+      @Path("category") category: String?,
       @Query("page") page: Int,
       @Query("type") type: String? = null,
       @Query("show_anime") showAnime: String? = null,

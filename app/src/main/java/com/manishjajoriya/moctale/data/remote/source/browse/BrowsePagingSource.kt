@@ -8,7 +8,7 @@ import com.manishjajoriya.moctale.domain.usecase.BrowseUseCase
 class BrowsePagingSource(
   private val browseUseCase: BrowseUseCase,
   private val browseScreen : String,
-  private val category: String,
+  private val category: String?,
 ) : PagingSource<Int, Data>() {
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Data> {
     return try {

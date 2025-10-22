@@ -97,7 +97,7 @@ fun NavGraph(paddingValues: PaddingValues, navController: NavHostController) {
         Routes.BrowseScreen.route + "/{browse-slug}" + "/{category-slug}" + "/{category-name}"
     ) {
       val browseSlug = it.arguments?.getString("browse-slug") ?: "category"
-      val categorySlug = it.arguments?.getString("category-slug") ?: "action"
+      val categorySlug = it.arguments?.getString("category-slug")
       val categoryName = it.arguments?.getString("category-name") ?: "Action"
       BrowseScreen(
           browseSlug = browseSlug,

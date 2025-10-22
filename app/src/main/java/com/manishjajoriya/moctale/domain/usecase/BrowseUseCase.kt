@@ -11,7 +11,7 @@ import com.manishjajoriya.moctale.domain.model.browse.language.Language
 
 class BrowseUseCase(private val moctaleApi: MoctaleApi) {
 
-  suspend fun categoryData(browseScreen: String, category: String, page: Int): BrowseData {
+  suspend fun categoryData(browseScreen: String, category: String?, page: Int): BrowseData {
     Log.i("LOG", "${Constants.BASE_URL}/library/$browseScreen/$category/content/?page=$page")
     return moctaleApi.categoryData(browseScreen = browseScreen, category = category, page = page)
   }

@@ -39,7 +39,7 @@ import com.manishjajoriya.moctale.ui.theme.Typography
 @Composable
 fun BrowseScreen(
     browseSlug: String,
-    categorySlug: String,
+    categorySlug: String?,
     categoryName: String,
     paddingValues: PaddingValues,
     viewModel: BrowseViewModel,
