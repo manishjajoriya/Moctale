@@ -19,7 +19,16 @@ interface MoctaleRepository {
 
   fun getSearchContentData(searchTerm: String): Flow<PagingData<Data>>
 
-  fun getSearchPersonData(searchTerm: String): Flow<PagingData<com.manishjajoriya.moctale.domain.model.search.person.Data>>
+  fun getSearchPersonData(
+      searchTerm: String
+  ): Flow<PagingData<com.manishjajoriya.moctale.domain.model.search.person.Data>>
 
-  fun getSearchUserData(searchTerm: String) : Flow<PagingData<com.manishjajoriya.moctale.domain.model.search.user.Data>>
+  fun getSearchUserData(
+      searchTerm: String
+  ): Flow<PagingData<com.manishjajoriya.moctale.domain.model.search.user.Data>>
+
+  fun getBrowseCategoryData(
+      browseScreen: String,
+      category: String,
+  ): Flow<PagingData<com.manishjajoriya.moctale.domain.model.browse.category.Data>>
 }

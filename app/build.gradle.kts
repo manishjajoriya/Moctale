@@ -75,7 +75,7 @@ dependencies {
 
   // -------------------- pagination --------------------
   implementation("androidx.paging:paging-runtime:3.3.6")
-  implementation("androidx.paging:paging-compose:3.4.0-alpha04")
+  implementation("androidx.paging:paging-compose:3.3.6")
 
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)

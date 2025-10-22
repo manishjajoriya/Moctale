@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.manishjajoriya.moctale.domain.model.schedule.Category
-import com.manishjajoriya.moctale.domain.model.schedule.DateText
+import com.manishjajoriya.moctale.presentation.scheduleScreen.components.DateText
 import com.manishjajoriya.moctale.domain.model.schedule.MovieCategory
 import com.manishjajoriya.moctale.domain.model.schedule.SeriesCategory
 import com.manishjajoriya.moctale.domain.model.schedule.TimeFilter

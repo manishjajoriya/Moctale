@@ -5,6 +5,7 @@ import com.manishjajoriya.moctale.Constants
 import com.manishjajoriya.moctale.data.remote.api.MoctaleApi
 import com.manishjajoriya.moctale.data.repository.MoctaleRepositoryImpl
 import com.manishjajoriya.moctale.domain.repository.MoctaleRepository
+import com.manishjajoriya.moctale.domain.usecase.BrowseUseCase
 import com.manishjajoriya.moctale.domain.usecase.ContentUseCase
 import com.manishjajoriya.moctale.domain.usecase.ExploreUseCase
 import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
@@ -75,12 +76,17 @@ object Module {
 
   @Provides
   @Singleton
+  fun provideBrowseUseCase(moctaleApi: MoctaleApi) = BrowseUseCase(moctaleApi = moctaleApi)
+
+  @Provides
+  @Singleton
   fun provideMoctaleApiUseCase(
       exploreUseCase: ExploreUseCase,
       contentUseCase: ContentUseCase,
       personUseCase: PersonUseCase,
       scheduleUseCase: ScheduleUseCase,
       searchUseCase: SearchUseCase,
+      browseUseCase: BrowseUseCase,
   ) =
       MoctaleApiUseCase(
           exploreUseCase,
@@ -88,6 +94,7 @@ object Module {
           personUseCase,
           scheduleUseCase,
           searchUseCase,
+          browseUseCase,
       )
 
   @Provides

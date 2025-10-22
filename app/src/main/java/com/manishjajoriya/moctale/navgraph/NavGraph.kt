@@ -10,6 +10,10 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.manishjajoriya.moctale.presentation.browseScreen.BrowseScreen
+import com.manishjajoriya.moctale.presentation.browseScreen.BrowseViewModel
+import com.manishjajoriya.moctale.presentation.browseScreen.category.CategoriesScreen
+import com.manishjajoriya.moctale.presentation.browseScreen.genre.GenreScreen
 import com.manishjajoriya.moctale.presentation.contentScreen.ContentScreen
 import com.manishjajoriya.moctale.presentation.contentScreen.ContentViewModel
 import com.manishjajoriya.moctale.presentation.exploreScreen.ExploreScreen
@@ -28,8 +32,9 @@ fun NavGraph(paddingValues: PaddingValues, navController: NavHostController) {
   val personViewModel: PersonViewModel = hiltViewModel()
   val scheduleViewModel: ScheduleViewModel = hiltViewModel()
   val searchViewModel: SearchViewModel = hiltViewModel()
-  //      val startDestination = Routes.PersonScreen.route + "/varun-dhawan"
-  val startDestination = Routes.ExploreScreen.route
+  val browseViewModel: BrowseViewModel = hiltViewModel()
+  val startDestination = Routes.GenreScreen.route
+  //  val startDestination = Routes.CategoriesScreen.route
 
   NavHost(navController = navController, startDestination = startDestination) {
     composable(Routes.ExploreScreen.route) {
@@ -82,6 +87,38 @@ fun NavGraph(paddingValues: PaddingValues, navController: NavHostController) {
       SearchScreen(
           paddingValues = paddingValues,
           viewModel = searchViewModel,
+          navController = navController,
+      )
+    }
+
+    composable(
+        Routes.BrowseScreen.route + "/{browse-slug}" + "/{category-slug}" + "/{category-name}"
+    ) {
+      val browseSlug = it.arguments?.getString("browse-slug") ?: "category"
+      val categorySlug = it.arguments?.getString("category-slug") ?: "action"
+      val categoryName = it.arguments?.getString("category-name") ?: "Action"
+      BrowseScreen(
+          browseSlug = browseSlug,
+          categorySlug = categorySlug,
+          categoryName = categoryName,
+          paddingValues = paddingValues,
+          viewModel = browseViewModel,
+          navController = navController,
+      )
+    }
+
+    composable(Routes.CategoriesScreen.route) {
+      CategoriesScreen(
+          paddingValues = paddingValues,
+          viewModel = browseViewModel,
+          navController = navController,
+      )
+    }
+
+    composable(Routes.GenreScreen.route) {
+      GenreScreen(
+          paddingValues = paddingValues,
+          viewModel = browseViewModel,
           navController = navController,
       )
     }

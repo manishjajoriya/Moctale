@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,7 +32,7 @@ fun MoviePoster(content: Content, onClick: (String) -> Unit) {
     AsyncImage(
         model = content.image,
         contentDescription = content.name,
-        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)),
+        modifier = Modifier.fillMaxWidth().aspectRatio(2f / 3f).clip(RoundedCornerShape(8.dp)),
         contentScale = ContentScale.Crop,
     )
     Spacer(modifier = Modifier.height(8.dp))
@@ -53,14 +54,14 @@ fun MoviePoster(
       AsyncImage(
           model = data.content.image,
           contentDescription = data.content.name,
-          modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)),
+          modifier = Modifier.fillMaxWidth().aspectRatio(2f / 3f).clip(RoundedCornerShape(8.dp)),
           contentScale = ContentScale.Crop,
       )
     } else {
       Image(
           painter = painterResource(R.drawable.ic_placeholder_move),
           contentDescription = data.content.name,
-          modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)),
+          modifier = Modifier.fillMaxWidth().aspectRatio(2f / 3f).clip(RoundedCornerShape(8.dp)),
           contentScale = ContentScale.Crop,
       )
     }
@@ -82,19 +83,19 @@ fun MoviePoster(
     slug: String,
     onClick: (String) -> Unit,
 ) {
-  Column(modifier = modifier.clickable(onClick = { onClick(slug) })) {
+  Column(modifier = modifier.clickable { onClick(slug) }) {
     if (imageUrl != null) {
       AsyncImage(
           model = imageUrl,
           contentDescription = imageUrl,
-          modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)),
+          modifier = Modifier.fillMaxWidth().aspectRatio(2f / 3f).clip(RoundedCornerShape(8.dp)),
           contentScale = ContentScale.Crop,
       )
     } else {
       Image(
           painter = painterResource(R.drawable.ic_placeholder_move),
           contentDescription = name,
-          modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)),
+          modifier = Modifier.fillMaxWidth().aspectRatio(2f / 3f).clip(RoundedCornerShape(8.dp)),
           contentScale = ContentScale.Crop,
       )
     }

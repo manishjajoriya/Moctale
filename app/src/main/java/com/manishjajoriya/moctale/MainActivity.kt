@@ -49,7 +49,9 @@ class MainActivity : ComponentActivity() {
               )
             },
         ) { innerPadding ->
-          BrowseSheet(isShowBrowseSheet = isShowBrowseSheet) { isShowBrowseSheet = false }
+          BrowseSheet(isShowBrowseSheet = isShowBrowseSheet, navController) {
+            isShowBrowseSheet = false
+          }
           NavGraph(paddingValues = innerPadding, navController = navController)
         }
       }

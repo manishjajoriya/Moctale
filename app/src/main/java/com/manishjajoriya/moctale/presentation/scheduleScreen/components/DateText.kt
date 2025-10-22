@@ -1,4 +1,4 @@
-package com.manishjajoriya.moctale.domain.model.schedule
+package com.manishjajoriya.moctale.presentation.scheduleScreen.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text

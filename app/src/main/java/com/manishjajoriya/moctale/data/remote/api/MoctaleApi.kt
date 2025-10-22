@@ -1,5 +1,8 @@
 package com.manishjajoriya.moctale.data.remote.api
 
+import com.manishjajoriya.moctale.domain.model.browse.category.Category
+import com.manishjajoriya.moctale.domain.model.browse.category.CategoryData
+import com.manishjajoriya.moctale.domain.model.browse.genre.Genre
 import com.manishjajoriya.moctale.domain.model.content.Content
 import com.manishjajoriya.moctale.domain.model.explore.ExploreItem
 import com.manishjajoriya.moctale.domain.model.person.Person
@@ -14,15 +17,19 @@ import retrofit2.http.Query
 
 interface MoctaleApi {
 
+  // Explore
   @GET("explore") suspend fun explore(): List<ExploreItem>
 
+  // Content
   @GET("library/content/{slug}") suspend fun content(@Path("slug") slug: String): Content
 
+  // Person
   @GET("library/person/{name}") suspend fun person(@Path("name") name: String): Person
 
   @GET("library/person/{name}/content")
   suspend fun personContent(@Path("name") name: String, @Query("page") page: Int): PersonContent
 
+  // Schedule
   @GET("schedule")
   suspend fun schedule(
       @Query("timeFilter") timeFilter: String,
@@ -30,6 +37,7 @@ interface MoctaleApi {
       @Query("releaseType") releaseType: String?,
   ): Schedule
 
+  // Search
   @GET("search/")
   suspend fun searchContent(
       @Query("q") searchTerm: String,
@@ -47,4 +55,18 @@ interface MoctaleApi {
       @Query("q") searchTerm: String,
       @Query("page") page: Int,
   ): SearchUser
+
+  // Browse
+  @GET("library/{browseScreen}/{category}/content")
+  suspend fun categoryData(
+      @Path("browseScreen") browseScreen: String,
+      @Path("category") category: String,
+      @Query("page") page: Int,
+      @Query("type") type: String? = null,
+      @Query("show_anime") showAnime: String? = null,
+  ): CategoryData
+
+  @GET("library/category") suspend fun categories(): List<Category>
+
+  @GET("library/genre") suspend fun genres(): List<Genre>
 }

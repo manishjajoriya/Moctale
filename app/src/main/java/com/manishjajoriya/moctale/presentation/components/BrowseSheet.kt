@@ -3,6 +3,7 @@ package com.manishjajoriya.moctale.presentation.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,16 +31,22 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.manishjajoriya.moctale.R
+import com.manishjajoriya.moctale.navgraph.Routes
 import com.manishjajoriya.moctale.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BrowseSheet(isShowBrowseSheet: Boolean, onDismissRequest: () -> Unit) {
+fun BrowseSheet(
+    isShowBrowseSheet: Boolean,
+    navController: NavController,
+    onDismissRequest: () -> Unit,
+) {
   val data =
       listOf(
-          BrowseData("Category", R.drawable.ic_category_icon),
-          BrowseData("Genre", R.drawable.ic_genre_icon),
+          BrowseData("Category", R.drawable.ic_category_icon, Routes.CategoriesScreen.route),
+          BrowseData("Genre", R.drawable.ic_genre_icon, Routes.GenreScreen.route),
           BrowseData("Country", R.drawable.ic_country_icon),
           BrowseData("Language", R.drawable.ic_language_icon),
           BrowseData("Family Friendly", R.drawable.ic_family_friendly_icon),
@@ -94,7 +101,13 @@ fun BrowseSheet(isShowBrowseSheet: Boolean, onDismissRequest: () -> Unit) {
                               )
                       )
                       .border(1.dp, Color.Gray, RoundedCornerShape(8.dp))
-                      .height(80.dp),
+                      .height(80.dp)
+                      .clickable(
+                          onClick = {
+                            onDismissRequest()
+                            navController.navigate(data.route ?: "")
+                          }
+                      ),
               verticalArrangement = Arrangement.Center,
               horizontalAlignment = Alignment.CenterHorizontally,
           ) {
@@ -117,4 +130,4 @@ fun BrowseSheet(isShowBrowseSheet: Boolean, onDismissRequest: () -> Unit) {
   }
 }
 
-data class BrowseData(val displayName: String, val image: Int)
+data class BrowseData(val displayName: String, val image: Int, val route: String? = null)
