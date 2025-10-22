@@ -4,10 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.manishjajoriya.moctale.domain.model.browse.Country
 import com.manishjajoriya.moctale.domain.model.browse.Data
 import com.manishjajoriya.moctale.domain.model.browse.category.Category
+import com.manishjajoriya.moctale.domain.model.browse.country.Country
 import com.manishjajoriya.moctale.domain.model.browse.genre.Genre
+import com.manishjajoriya.moctale.domain.model.browse.language.Language
 import com.manishjajoriya.moctale.domain.repository.MoctaleRepository
 import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,6 +35,9 @@ constructor(
 
   private val _countries = MutableStateFlow<List<Country>?>(null)
   val countries = _countries.asStateFlow()
+
+  private val _languages = MutableStateFlow<List<Language>?>(null)
+  val languages = _languages.asStateFlow()
 
   private val _browseData = MutableStateFlow<Flow<PagingData<Data>>?>(null)
   val browseData = _browseData.asStateFlow()
@@ -65,6 +69,16 @@ constructor(
     viewModelScope.launch(Dispatchers.IO) {
       try {
         _countries.value = moctaleApiUseCase.browseUseCase.countries()
+      } catch (e: Exception) {
+        e.printStackTrace()
+      }
+    }
+  }
+
+  fun fetchLanguages() {
+    viewModelScope.launch(Dispatchers.IO) {
+      try {
+        _languages.value = moctaleApiUseCase.browseUseCase.languages()
       } catch (e: Exception) {
         e.printStackTrace()
       }

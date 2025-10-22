@@ -14,12 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.manishjajoriya.moctale.domain.model.browse.Country
+import com.manishjajoriya.moctale.domain.model.browse.country.Country
 import com.manishjajoriya.moctale.ui.theme.Typography
 
 @Composable
 fun CountryBox(country: Country, onClick: () -> Unit) {
-
   Column(
       modifier = Modifier.clickable(onClick = onClick).height(160.dp).background(Color(0xFF171717)),
       horizontalAlignment = Alignment.CenterHorizontally,

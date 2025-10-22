@@ -3,10 +3,11 @@ package com.manishjajoriya.moctale.domain.usecase
 import android.util.Log
 import com.manishjajoriya.moctale.Constants
 import com.manishjajoriya.moctale.data.remote.api.MoctaleApi
-import com.manishjajoriya.moctale.domain.model.browse.category.Category
 import com.manishjajoriya.moctale.domain.model.browse.BrowseData
-import com.manishjajoriya.moctale.domain.model.browse.Country
+import com.manishjajoriya.moctale.domain.model.browse.category.Category
+import com.manishjajoriya.moctale.domain.model.browse.country.Country
 import com.manishjajoriya.moctale.domain.model.browse.genre.Genre
+import com.manishjajoriya.moctale.domain.model.browse.language.Language
 
 class BrowseUseCase(private val moctaleApi: MoctaleApi) {
 
@@ -25,5 +26,9 @@ class BrowseUseCase(private val moctaleApi: MoctaleApi) {
 
   suspend fun countries(): List<Country> {
     return moctaleApi.countries()
+  }
+
+  suspend fun languages(): List<Language> {
+    return moctaleApi.languages()
   }
 }
