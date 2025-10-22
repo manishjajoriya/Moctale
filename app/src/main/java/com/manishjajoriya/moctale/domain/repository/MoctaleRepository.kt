@@ -27,8 +27,8 @@ interface MoctaleRepository {
       searchTerm: String
   ): Flow<PagingData<com.manishjajoriya.moctale.domain.model.search.user.Data>>
 
-  fun getBrowseCategoryData(
+  fun getBrowseData(
       browseScreen: String,
       category: String,
-  ): Flow<PagingData<com.manishjajoriya.moctale.domain.model.browse.category.Data>>
+  ): Flow<PagingData<com.manishjajoriya.moctale.domain.model.browse.Data>>
 }

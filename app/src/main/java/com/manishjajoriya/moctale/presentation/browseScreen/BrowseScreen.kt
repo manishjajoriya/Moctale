@@ -46,7 +46,7 @@ fun BrowseScreen(
     navController: NavController,
 ) {
   LaunchedEffect(categorySlug) {
-    viewModel.fetchCategoryData(browseSlug = browseSlug, category = categorySlug)
+    viewModel.fetchBrowseData(browseSlug = browseSlug, category = categorySlug)
   }
 
   val categoryDataFlow by viewModel.categoryData.collectAsState()

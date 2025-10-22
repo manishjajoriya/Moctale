@@ -1,8 +1,8 @@
-package com.manishjajoriya.moctale.domain.model.browse.category
+package com.manishjajoriya.moctale.domain.model.browse
 
 import com.google.gson.annotations.SerializedName
 
-data class CategoryData(
+data class BrowseData(
     @SerializedName("total_pages") val totalPages: Int,
     @SerializedName("current_page") val currentPage: Int,
     @SerializedName("next_page") val nextPage: Int?,

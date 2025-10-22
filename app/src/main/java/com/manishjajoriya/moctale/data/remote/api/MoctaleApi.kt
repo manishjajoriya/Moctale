@@ -1,7 +1,7 @@
 package com.manishjajoriya.moctale.data.remote.api
 
 import com.manishjajoriya.moctale.domain.model.browse.category.Category
-import com.manishjajoriya.moctale.domain.model.browse.category.CategoryData
+import com.manishjajoriya.moctale.domain.model.browse.BrowseData
 import com.manishjajoriya.moctale.domain.model.browse.genre.Genre
 import com.manishjajoriya.moctale.domain.model.content.Content
 import com.manishjajoriya.moctale.domain.model.explore.ExploreItem
@@ -64,7 +64,7 @@ interface MoctaleApi {
       @Query("page") page: Int,
       @Query("type") type: String? = null,
       @Query("show_anime") showAnime: String? = null,
-  ): CategoryData
+  ): BrowseData
 
   @GET("library/category") suspend fun categories(): List<Category>
 

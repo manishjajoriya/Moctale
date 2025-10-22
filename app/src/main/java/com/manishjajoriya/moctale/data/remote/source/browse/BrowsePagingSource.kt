@@ -2,10 +2,10 @@ package com.manishjajoriya.moctale.data.remote.source.browse
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.manishjajoriya.moctale.domain.model.browse.category.Data
+import com.manishjajoriya.moctale.domain.model.browse.Data
 import com.manishjajoriya.moctale.domain.usecase.BrowseUseCase
 
-class BrowseCategoryPagingSource(
+class BrowsePagingSource(
   private val browseUseCase: BrowseUseCase,
   private val browseScreen : String,
   private val category: String,

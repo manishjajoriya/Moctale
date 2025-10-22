@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.manishjajoriya.moctale.domain.model.browse.category.Category
-import com.manishjajoriya.moctale.domain.model.browse.category.Data
+import com.manishjajoriya.moctale.domain.model.browse.Data
 import com.manishjajoriya.moctale.domain.model.browse.genre.Genre
 import com.manishjajoriya.moctale.domain.repository.MoctaleRepository
 import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
@@ -57,10 +57,10 @@ constructor(
     }
   }
 
-  fun fetchCategoryData(browseSlug: String, category: String) {
+  fun fetchBrowseData(browseSlug: String, category: String) {
     _categoryData.value =
         moctaleRepository
-            .getBrowseCategoryData(browseScreen = browseSlug, category)
+            .getBrowseData(browseScreen = browseSlug, category)
             .cachedIn(viewModelScope)
     viewModelScope.launch(Dispatchers.IO) {
       try {

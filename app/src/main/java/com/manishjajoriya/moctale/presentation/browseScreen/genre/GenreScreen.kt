@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -44,13 +45,11 @@ fun GenreScreen(
   val genres by viewModel.genre.collectAsState()
   genres?.let { genres ->
     LazyColumn(
-        modifier =
-            Modifier.padding(paddingValues)
-                .padding(start = 16.dp, top = 20.dp, end = 16.dp, bottom = 60.dp)
-                .fillMaxSize(),
+        modifier = Modifier.fillMaxSize().padding(paddingValues).padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+      item {}
       itemsIndexed(genres) { index, genre ->
         Row(
             modifier =
@@ -86,6 +85,7 @@ fun GenreScreen(
           )
         }
       }
+      item { Spacer(modifier = Modifier.height(20.dp)) }
     }
   }
 }

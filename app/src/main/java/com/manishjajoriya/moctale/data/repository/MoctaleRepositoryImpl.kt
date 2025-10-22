@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.insertSeparators
 import androidx.paging.map
-import com.manishjajoriya.moctale.data.remote.source.browse.BrowseCategoryPagingSource
+import com.manishjajoriya.moctale.data.remote.source.browse.BrowsePagingSource
 import com.manishjajoriya.moctale.data.remote.source.person.PersonContentPagingSource
 import com.manishjajoriya.moctale.data.remote.source.schedule.SchedulePagingSource
 import com.manishjajoriya.moctale.data.remote.source.search.SearchContentPagingSource
@@ -140,10 +140,10 @@ class MoctaleRepositoryImpl @Inject constructor(private val moctaleApiUseCase: M
         .flow
   }
 
-  override fun getBrowseCategoryData(
+  override fun getBrowseData(
       browseScreen: String,
       category: String,
-  ): Flow<PagingData<com.manishjajoriya.moctale.domain.model.browse.category.Data>> {
+  ): Flow<PagingData<com.manishjajoriya.moctale.domain.model.browse.Data>> {
     return Pager(
             config =
                 PagingConfig(
@@ -153,7 +153,7 @@ class MoctaleRepositoryImpl @Inject constructor(private val moctaleApiUseCase: M
                     initialLoadSize = 20,
                 ),
             pagingSourceFactory = {
-              BrowseCategoryPagingSource(
+              BrowsePagingSource(
                   browseUseCase = moctaleApiUseCase.browseUseCase,
                   browseScreen = browseScreen,
                   category = category,
