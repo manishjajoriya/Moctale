@@ -49,8 +49,8 @@ fun BrowseScreen(
     viewModel.fetchBrowseData(browseSlug = browseSlug, category = categorySlug)
   }
 
-  val categoryDataFlow by viewModel.categoryData.collectAsState()
-  val categoryDataItems = categoryDataFlow?.collectAsLazyPagingItems()
+  val browseDataFlow by viewModel.browseData.collectAsState()
+  val browseDataItems = browseDataFlow?.collectAsLazyPagingItems()
   val totalItems by viewModel.totalItem.collectAsState()
   var selectedType by remember { mutableStateOf(Type.ALL) }
   var selectedDropDownIndex by remember { mutableIntStateOf(0) }
@@ -100,10 +100,10 @@ fun BrowseScreen(
           { selectedDropDownIndex = it },
       )
     }
-    categoryDataItems?.let { items ->
+    browseDataItems?.let { items ->
       items(items.itemCount) { index ->
         Box(modifier = Modifier.padding(8.dp)) {
-          categoryDataItems[index]?.let { data ->
+          browseDataItems[index]?.let { data ->
             MoviePoster(
                 name = data.name,
                 imageUrl = data.image,

@@ -1,7 +1,8 @@
 package com.manishjajoriya.moctale.data.remote.api
 
-import com.manishjajoriya.moctale.domain.model.browse.category.Category
 import com.manishjajoriya.moctale.domain.model.browse.BrowseData
+import com.manishjajoriya.moctale.domain.model.browse.Country
+import com.manishjajoriya.moctale.domain.model.browse.category.Category
 import com.manishjajoriya.moctale.domain.model.browse.genre.Genre
 import com.manishjajoriya.moctale.domain.model.content.Content
 import com.manishjajoriya.moctale.domain.model.explore.ExploreItem
@@ -69,4 +70,6 @@ interface MoctaleApi {
   @GET("library/category") suspend fun categories(): List<Category>
 
   @GET("library/genre") suspend fun genres(): List<Genre>
+
+  @GET("library/country") suspend fun countries(): List<Country>
 }

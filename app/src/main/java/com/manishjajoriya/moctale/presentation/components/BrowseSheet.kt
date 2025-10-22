@@ -45,9 +45,9 @@ fun BrowseSheet(
 ) {
   val data =
       listOf(
-          BrowseData("Category", R.drawable.ic_category_icon, Routes.CategoriesScreen.route),
+          BrowseData("Category", R.drawable.ic_category_icon, Routes.CategoryScreen.route),
           BrowseData("Genre", R.drawable.ic_genre_icon, Routes.GenreScreen.route),
-          BrowseData("Country", R.drawable.ic_country_icon),
+          BrowseData("Country", R.drawable.ic_country_icon, Routes.CountryScreen.route),
           BrowseData("Language", R.drawable.ic_language_icon),
           BrowseData("Family Friendly", R.drawable.ic_family_friendly_icon),
           BrowseData("Award Winners", R.drawable.ic_award_winners_icon),

@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import com.manishjajoriya.moctale.presentation.browseScreen.BrowseScreen
 import com.manishjajoriya.moctale.presentation.browseScreen.BrowseViewModel
 import com.manishjajoriya.moctale.presentation.browseScreen.category.CategoriesScreen
+import com.manishjajoriya.moctale.presentation.browseScreen.country.CountryScreen
 import com.manishjajoriya.moctale.presentation.browseScreen.genre.GenreScreen
 import com.manishjajoriya.moctale.presentation.contentScreen.ContentScreen
 import com.manishjajoriya.moctale.presentation.contentScreen.ContentViewModel
@@ -33,7 +34,7 @@ fun NavGraph(paddingValues: PaddingValues, navController: NavHostController) {
   val scheduleViewModel: ScheduleViewModel = hiltViewModel()
   val searchViewModel: SearchViewModel = hiltViewModel()
   val browseViewModel: BrowseViewModel = hiltViewModel()
-  val startDestination = Routes.GenreScreen.route
+  val startDestination = Routes.CountryScreen.route
   //  val startDestination = Routes.CategoriesScreen.route
 
   NavHost(navController = navController, startDestination = startDestination) {
@@ -107,7 +108,7 @@ fun NavGraph(paddingValues: PaddingValues, navController: NavHostController) {
       )
     }
 
-    composable(Routes.CategoriesScreen.route) {
+    composable(Routes.CategoryScreen.route) {
       CategoriesScreen(
           paddingValues = paddingValues,
           viewModel = browseViewModel,
@@ -117,6 +118,14 @@ fun NavGraph(paddingValues: PaddingValues, navController: NavHostController) {
 
     composable(Routes.GenreScreen.route) {
       GenreScreen(
+          paddingValues = paddingValues,
+          viewModel = browseViewModel,
+          navController = navController,
+      )
+    }
+
+    composable(Routes.CountryScreen.route) {
+      CountryScreen(
           paddingValues = paddingValues,
           viewModel = browseViewModel,
           navController = navController,

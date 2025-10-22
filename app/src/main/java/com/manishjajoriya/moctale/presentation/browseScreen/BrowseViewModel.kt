@@ -4,8 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.manishjajoriya.moctale.domain.model.browse.category.Category
+import com.manishjajoriya.moctale.domain.model.browse.Country
 import com.manishjajoriya.moctale.domain.model.browse.Data
+import com.manishjajoriya.moctale.domain.model.browse.category.Category
 import com.manishjajoriya.moctale.domain.model.browse.genre.Genre
 import com.manishjajoriya.moctale.domain.repository.MoctaleRepository
 import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
@@ -31,8 +32,11 @@ constructor(
   private val _genres = MutableStateFlow<List<Genre>?>(null)
   val genre = _genres.asStateFlow()
 
-  private val _categoryData = MutableStateFlow<Flow<PagingData<Data>>?>(null)
-  val categoryData = _categoryData.asStateFlow()
+  private val _countries = MutableStateFlow<List<Country>?>(null)
+  val countries = _countries.asStateFlow()
+
+  private val _browseData = MutableStateFlow<Flow<PagingData<Data>>?>(null)
+  val browseData = _browseData.asStateFlow()
 
   private val _totalItems = MutableStateFlow<Int?>(null)
   val totalItem = _totalItems.asStateFlow()
@@ -57,8 +61,18 @@ constructor(
     }
   }
 
+  fun fetchCountries() {
+    viewModelScope.launch(Dispatchers.IO) {
+      try {
+        _countries.value = moctaleApiUseCase.browseUseCase.countries()
+      } catch (e: Exception) {
+        e.printStackTrace()
+      }
+    }
+  }
+
   fun fetchBrowseData(browseSlug: String, category: String) {
-    _categoryData.value =
+    _browseData.value =
         moctaleRepository
             .getBrowseData(browseScreen = browseSlug, category)
             .cachedIn(viewModelScope)

@@ -5,6 +5,7 @@ import com.manishjajoriya.moctale.Constants
 import com.manishjajoriya.moctale.data.remote.api.MoctaleApi
 import com.manishjajoriya.moctale.domain.model.browse.category.Category
 import com.manishjajoriya.moctale.domain.model.browse.BrowseData
+import com.manishjajoriya.moctale.domain.model.browse.Country
 import com.manishjajoriya.moctale.domain.model.browse.genre.Genre
 
 class BrowseUseCase(private val moctaleApi: MoctaleApi) {
@@ -20,5 +21,9 @@ class BrowseUseCase(private val moctaleApi: MoctaleApi) {
 
   suspend fun genres(): List<Genre> {
     return moctaleApi.genres()
+  }
+
+  suspend fun countries(): List<Country> {
+    return moctaleApi.countries()
   }
 }
