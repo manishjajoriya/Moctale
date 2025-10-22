@@ -6,11 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.manishjajoriya.moctale.navgraph.NavGraph
 import com.manishjajoriya.moctale.navgraph.Routes
@@ -29,28 +31,44 @@ class MainActivity : ComponentActivity() {
       MoctaleTheme {
         val navController = rememberNavController()
         var isShowBrowseSheet by remember { mutableStateOf(false) }
+        val mainViewModel: MainViewModel = hiltViewModel()
+        val startDestination =
+            if (mainViewModel.isLogin.collectAsState().value) Routes.ExploreScreen.route
+            else Routes.AuthScreen.route
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            topBar = { TopBar(navController) },
+            topBar = {
+              if (startDestination != Routes.AuthScreen.route) {
+                TopBar(navController)
+              }
+            },
             bottomBar = {
-              BottomBar(
-                  navController,
-                  onClick = { clickText ->
-                    when (clickText) {
-                      "explore" -> navController.navigate(Routes.ExploreScreen.route)
-                      "schedule" -> navController.navigate(Routes.ScheduleScreen.route)
-                      "browse" -> isShowBrowseSheet = true
-                      "clubs" -> navController.navigate(Routes.ComingSoonScreen.route)
-                      "profile" -> navController.navigate(Routes.ComingSoonScreen.route)
-                    }
-                  },
-              )
+              if (startDestination != Routes.AuthScreen.route) {
+                BottomBar(
+                    navController,
+                    onClick = { clickText ->
+                      when (clickText) {
+                        "explore" -> navController.navigate(Routes.ExploreScreen.route)
+                        "schedule" -> navController.navigate(Routes.ScheduleScreen.route)
+                        "browse" -> isShowBrowseSheet = true
+                        "clubs" -> navController.navigate(Routes.ComingSoonScreen.route)
+                        "profile" -> navController.navigate(Routes.ComingSoonScreen.route)
+                      }
+                    },
+                )
+              }
             },
         ) { innerPadding ->
           BrowseSheet(isShowBrowseSheet = isShowBrowseSheet, navController) {
             isShowBrowseSheet = false
           }
-          NavGraph(paddingValues = innerPadding, navController = navController)
+
+          NavGraph(
+              paddingValues = innerPadding,
+              navController = navController,
+              startDestination = startDestination,
+              mainViewModel = mainViewModel,
+          )
         }
       }
     }

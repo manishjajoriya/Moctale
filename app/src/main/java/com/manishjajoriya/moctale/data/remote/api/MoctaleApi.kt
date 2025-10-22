@@ -1,8 +1,8 @@
 package com.manishjajoriya.moctale.data.remote.api
 
 import com.manishjajoriya.moctale.domain.model.browse.BrowseData
-import com.manishjajoriya.moctale.domain.model.browse.country.Country
 import com.manishjajoriya.moctale.domain.model.browse.category.Category
+import com.manishjajoriya.moctale.domain.model.browse.country.Country
 import com.manishjajoriya.moctale.domain.model.browse.genre.Genre
 import com.manishjajoriya.moctale.domain.model.browse.language.Language
 import com.manishjajoriya.moctale.domain.model.content.Content
@@ -13,11 +13,15 @@ import com.manishjajoriya.moctale.domain.model.schedule.Schedule
 import com.manishjajoriya.moctale.domain.model.search.content.SearchContent
 import com.manishjajoriya.moctale.domain.model.search.person.SearchPerson
 import com.manishjajoriya.moctale.domain.model.search.user.SearchUser
+import com.manishjajoriya.moctale.domain.model.validate.Validate
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MoctaleApi {
+
+  // Validate
+  @GET("identity/validate") suspend fun validate(): Validate
 
   // Explore
   @GET("explore") suspend fun explore(): List<ExploreItem>
@@ -74,5 +78,5 @@ interface MoctaleApi {
 
   @GET("library/country") suspend fun countries(): List<Country>
 
-  @GET("library/language") suspend fun languages() : List<Language>
+  @GET("library/language") suspend fun languages(): List<Language>
 }

@@ -1,10 +1,13 @@
 package com.manishjajoriya.moctale.di
 
-import com.manishjajoriya.moctale.BuildConfig
+import android.app.Application
 import com.manishjajoriya.moctale.Constants
+import com.manishjajoriya.moctale.data.local.datastore.PreferencesDataStoreImpl
+import com.manishjajoriya.moctale.data.manager.PreferencesManager
 import com.manishjajoriya.moctale.data.remote.api.MoctaleApi
 import com.manishjajoriya.moctale.data.repository.MoctaleRepositoryImpl
 import com.manishjajoriya.moctale.domain.repository.MoctaleRepository
+import com.manishjajoriya.moctale.domain.repository.PreferencesRepository
 import com.manishjajoriya.moctale.domain.usecase.BrowseUseCase
 import com.manishjajoriya.moctale.domain.usecase.ContentUseCase
 import com.manishjajoriya.moctale.domain.usecase.ExploreUseCase
@@ -12,6 +15,7 @@ import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
 import com.manishjajoriya.moctale.domain.usecase.PersonUseCase
 import com.manishjajoriya.moctale.domain.usecase.ScheduleUseCase
 import com.manishjajoriya.moctale.domain.usecase.SearchUseCase
+import com.manishjajoriya.moctale.domain.usecase.ValidateUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,13 +33,13 @@ object Module {
 
   @Provides
   @Singleton
-  fun provideClient(): OkHttpClient {
+  fun provideClient(preferencesManager: PreferencesManager): OkHttpClient {
     val headerInterceptor = Interceptor { chain ->
       val original: Request = chain.request()
       val request =
           original
               .newBuilder()
-              .header("Cookie", "auth_token=${BuildConfig.AUTH_TOKEN}")
+              .header("Cookie", "auth_token=${preferencesManager.authToken.value}")
               .method(original.method, original.body)
               .build()
       chain.proceed(request)
@@ -53,6 +57,10 @@ object Module {
           .addConverterFactory(GsonConverterFactory.create())
           .build()
           .create(MoctaleApi::class.java)
+
+  @Provides
+  @Singleton
+  fun provideValidateUseCase(moctaleApi: MoctaleApi) = ValidateUseCase(moctaleApi = moctaleApi)
 
   @Provides
   @Singleton
@@ -81,6 +89,7 @@ object Module {
   @Provides
   @Singleton
   fun provideMoctaleApiUseCase(
+      validateUseCase: ValidateUseCase,
       exploreUseCase: ExploreUseCase,
       contentUseCase: ContentUseCase,
       personUseCase: PersonUseCase,
@@ -89,6 +98,7 @@ object Module {
       browseUseCase: BrowseUseCase,
   ) =
       MoctaleApiUseCase(
+          validateUseCase,
           exploreUseCase,
           contentUseCase,
           personUseCase,
@@ -101,4 +111,11 @@ object Module {
   @Singleton
   fun provideMoctaleRepository(moctaleApiUseCase: MoctaleApiUseCase): MoctaleRepository =
       MoctaleRepositoryImpl(moctaleApiUseCase = moctaleApiUseCase)
+
+  @Provides
+  @Singleton
+  fun providePreferencesRepository(application: Application): PreferencesRepository =
+      PreferencesDataStoreImpl(context = application)
+
+  @Provides @Singleton fun providePreferencesManager() = PreferencesManager()
 }

@@ -10,6 +10,8 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.manishjajoriya.moctale.MainViewModel
+import com.manishjajoriya.moctale.presentation.authScreen.AuthScreen
 import com.manishjajoriya.moctale.presentation.browseScreen.BrowseScreen
 import com.manishjajoriya.moctale.presentation.browseScreen.BrowseViewModel
 import com.manishjajoriya.moctale.presentation.browseScreen.category.CategoriesScreen
@@ -29,17 +31,27 @@ import com.manishjajoriya.moctale.presentation.searchScreen.SearchScreen
 import com.manishjajoriya.moctale.presentation.searchScreen.SearchViewModel
 
 @Composable
-fun NavGraph(paddingValues: PaddingValues, navController: NavHostController) {
+fun NavGraph(
+    paddingValues: PaddingValues,
+    startDestination: String,
+    navController: NavHostController,
+    mainViewModel: MainViewModel,
+) {
   val exploreViewModel: ExploreViewModel = hiltViewModel()
   val contentViewModel: ContentViewModel = hiltViewModel()
   val personViewModel: PersonViewModel = hiltViewModel()
   val scheduleViewModel: ScheduleViewModel = hiltViewModel()
   val searchViewModel: SearchViewModel = hiltViewModel()
   val browseViewModel: BrowseViewModel = hiltViewModel()
-  val startDestination = Routes.ExploreScreen.route
-  //  val startDestination = Routes.CategoriesScreen.route
 
   NavHost(navController = navController, startDestination = startDestination) {
+    composable(Routes.AuthScreen.route) {
+      AuthScreen(
+          viewModel = mainViewModel,
+          navController = navController,
+      )
+    }
+
     composable(Routes.ExploreScreen.route) {
       ExploreScreen(
           paddingValues = paddingValues,

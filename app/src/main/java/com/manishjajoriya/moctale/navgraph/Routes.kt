@@ -1,6 +1,9 @@
 package com.manishjajoriya.moctale.navgraph
 
 sealed class Routes(val route: String) {
+
+  object AuthScreen : Routes(route = "auth")
+
   object ExploreScreen : Routes(route = "explore")
 
   object ContentScreen : Routes(route = "content")
