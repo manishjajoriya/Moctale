@@ -17,12 +17,10 @@ import com.manishjajoriya.moctale.domain.model.schedule.UiScheduleItem
 import com.manishjajoriya.moctale.domain.repository.MoctaleRepository
 import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
 import com.manishjajoriya.moctale.domain.usecase.ScheduleUseCase
-import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class MoctaleRepositoryImpl @Inject constructor(private val moctaleApiUseCase: MoctaleApiUseCase) :
-    MoctaleRepository {
+class MoctaleRepositoryImpl(private val moctaleApiUseCase: MoctaleApiUseCase) : MoctaleRepository {
 
   override fun getGroupedScheduleData(
       timeFilter: TimeFilter,

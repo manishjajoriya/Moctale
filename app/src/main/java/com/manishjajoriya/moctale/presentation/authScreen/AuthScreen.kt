@@ -44,6 +44,7 @@ fun AuthScreen(
   var authToken by remember { mutableStateOf("") }
   val loading by viewModel.loading.collectAsState()
   val isLogin by viewModel.isLogin.collectAsState()
+  val error by viewModel.error.collectAsState()
   var loginAttempted by remember { mutableStateOf(false) }
 
   if (isLogin) navController.navigate(Routes.ExploreScreen.route)
@@ -102,10 +103,10 @@ fun AuthScreen(
                 unfocusedContainerColor = Color(0xFF2A2A2A),
             ),
     )
-
-    if (loginAttempted && !isLogin && !loading) {
+    error?.let { error ->
+      error
       Text(
-          "Invalid token, please recheck your token and remove any new line and whitespace",
+          error,
           modifier = Modifier.fillMaxWidth(.9f).padding(top = 16.dp),
           textAlign = TextAlign.Center,
           style = Typography.bodyLarge.copy(color = Color.Red.copy(.9f)),

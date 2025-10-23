@@ -3,7 +3,6 @@ package com.manishjajoriya.moctale.data.local.datastore
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -26,5 +25,4 @@ class PreferencesDataStoreImpl(private val context: Context) : PreferencesReposi
   override fun getAuthToken(): Flow<String?> {
     return context.dataStore.data.map { pref -> pref[AUTH_TOKEN_KEY] }
   }
-
 }

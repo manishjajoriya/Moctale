@@ -2,6 +2,7 @@ package com.manishjajoriya.moctale
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.manishjajoriya.moctale.data.manager.NetworkStatusManager
 import com.manishjajoriya.moctale.data.manager.PreferencesManager
 import com.manishjajoriya.moctale.domain.repository.PreferencesRepository
 import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
@@ -21,6 +22,7 @@ constructor(
     private val preferencesRepository: PreferencesRepository,
     private val preferencesManager: PreferencesManager,
     private val moctaleApiUseCase: MoctaleApiUseCase,
+    private val networkStatusManager: NetworkStatusManager,
 ) : ViewModel() {
 
   private val _isLogin = MutableStateFlow(false)
@@ -29,11 +31,18 @@ constructor(
   private val _loading = MutableStateFlow(false)
   val loading = _loading.asStateFlow()
 
+  private val _error = MutableStateFlow<String?>(null)
+  val error = _error.asStateFlow()
+
   init {
     fetchTokenFromLocalStorage()
   }
 
   fun saveAuthToken(token: String) {
+    if (!networkStatusManager.isConnected()) {
+      _error.value = "NO INTERNET"
+      return
+    }
     val cleanToken = token.trim().replace(Regex("[\\r\\n]"), "")
     viewModelScope.launch {
       _loading.value = true
@@ -42,6 +51,9 @@ constructor(
       if (isValid) {
         _isLogin.value = true
         withContext(Dispatchers.IO) { preferencesRepository.setAuthToken(cleanToken) }
+      } else {
+        _error.value =
+            "Invalid token, please recheck your token and remove any new line and whitespace"
       }
       _loading.value = false
     }

@@ -3,6 +3,7 @@ package com.manishjajoriya.moctale.di
 import android.app.Application
 import com.manishjajoriya.moctale.Constants
 import com.manishjajoriya.moctale.data.local.datastore.PreferencesDataStoreImpl
+import com.manishjajoriya.moctale.data.manager.NetworkStatusManager
 import com.manishjajoriya.moctale.data.manager.PreferencesManager
 import com.manishjajoriya.moctale.data.remote.api.MoctaleApi
 import com.manishjajoriya.moctale.data.repository.MoctaleRepositoryImpl
@@ -118,4 +119,8 @@ object Module {
       PreferencesDataStoreImpl(context = application)
 
   @Provides @Singleton fun providePreferencesManager() = PreferencesManager()
+
+  @Provides
+  @Singleton
+  fun provideNetworkManager(application: Application) = NetworkStatusManager(context = application)
 }
