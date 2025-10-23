@@ -30,41 +30,37 @@ constructor(
   val loading = _loading.asStateFlow()
 
   init {
-    fetchTokenStore()
+    fetchTokenFromLocalStorage()
   }
 
   fun saveAuthToken(token: String) {
     val cleanToken = token.trim().replace(Regex("[\\r\\n]"), "")
     viewModelScope.launch {
       _loading.value = true
-      withContext(Dispatchers.IO) { preferencesRepository.saveAuthToken(cleanToken) }
       preferencesManager.setToken(cleanToken)
-      _isLogin.value = validateToken()
+      val isValid = validateToken()
+      if (isValid) {
+        _isLogin.value = true
+        withContext(Dispatchers.IO) { preferencesRepository.setAuthToken(cleanToken) }
+      }
       _loading.value = false
     }
   }
 
-  fun fetchTokenStore() {
+  fun fetchTokenFromLocalStorage() {
     viewModelScope.launch {
       _loading.value = true
 
-      val token = preferencesManager.authToken.value
-      if (!token.isNullOrEmpty()) {
-        _isLogin.value = true
-        _loading.value = false
-        return@launch
-      }
-
-      val localToken =
+      val savedToken =
           withContext(Dispatchers.IO) { preferencesRepository.getAuthToken().firstOrNull() }
 
-      if (localToken.isNullOrEmpty()) {
+      if (savedToken.isNullOrEmpty()) {
+        _isLogin.value = false
         _loading.value = false
         return@launch
       }
-      preferencesManager.setToken(localToken)
-      val valid = validateToken()
-      _isLogin.value = valid
+      preferencesManager.setToken(savedToken)
+      _isLogin.value = true
       _loading.value = false
     }
   }

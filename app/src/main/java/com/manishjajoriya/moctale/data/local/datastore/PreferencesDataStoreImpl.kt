@@ -3,6 +3,7 @@ package com.manishjajoriya.moctale.data.local.datastore
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -18,11 +19,12 @@ class PreferencesDataStoreImpl(private val context: Context) : PreferencesReposi
 
   private val AUTH_TOKEN_KEY = stringPreferencesKey(Constants.AUTH_TOKEN)
 
-  override suspend fun saveAuthToken(token: String) {
+  override suspend fun setAuthToken(token: String) {
     context.dataStore.edit { pref -> pref[AUTH_TOKEN_KEY] = token }
   }
 
   override fun getAuthToken(): Flow<String?> {
-    return context.dataStore.data.map { preferences -> preferences[AUTH_TOKEN_KEY] }
+    return context.dataStore.data.map { pref -> pref[AUTH_TOKEN_KEY] }
   }
+
 }
