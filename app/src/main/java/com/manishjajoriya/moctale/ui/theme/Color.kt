@@ -3,3 +3,4 @@ package com.manishjajoriya.moctale.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val Background = Color(0xFF080808)
+val Pink = Color(0xFFaf48ff)

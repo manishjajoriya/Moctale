@@ -55,7 +55,7 @@ fun NavGraph(
     composable(Routes.ExploreScreen.route) {
       ExploreScreen(
           paddingValues = paddingValues,
-          exploreViewModel = exploreViewModel,
+          viewModel = exploreViewModel,
           navController = navController,
       )
     }
