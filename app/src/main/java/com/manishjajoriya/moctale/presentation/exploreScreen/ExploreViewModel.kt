@@ -8,7 +8,6 @@ import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -44,7 +43,6 @@ constructor(
     if (isRefreshCall) _isRefreshing.value = true else _loading.value = true
     viewModelScope.launch(Dispatchers.IO) {
       try {
-        delay(3000)
         _exploreData.value = moctaleApiUseCase.exploreUseCase()
       } catch (e: HttpException) {
         _error.value = e.message
