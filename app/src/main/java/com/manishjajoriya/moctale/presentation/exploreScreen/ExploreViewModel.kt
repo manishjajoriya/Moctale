@@ -2,16 +2,18 @@ package com.manishjajoriya.moctale.presentation.exploreScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.manishjajoriya.moctale.Constants
 import com.manishjajoriya.moctale.data.manager.NetworkStatusManager
 import com.manishjajoriya.moctale.domain.model.explore.ExploreItem
 import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
+import kotlinx.coroutines.withContext
 
 @HiltViewModel
 class ExploreViewModel
@@ -33,25 +35,36 @@ constructor(
   private val _error = MutableStateFlow<String?>(null)
   val error = _error.asStateFlow()
 
-  fun fetchExploreData(isRefreshCall: Boolean = false) {
-    if (!networkStatusManager.isConnected()) {
-      _error.value = "No network available\nPlease check your network status"
-      return
-    }
-    _exploreData.value = null
-    _error.value = null
-    if (isRefreshCall) _isRefreshing.value = true else _loading.value = true
-    viewModelScope.launch(Dispatchers.IO) {
+  fun <T : Any> callApi(
+      value: MutableStateFlow<List<T>?>,
+      isRefreshCall: Boolean,
+      fn: suspend () -> List<T>,
+  ) {
+    viewModelScope.launch {
       try {
-        _exploreData.value = moctaleApiUseCase.exploreUseCase()
-      } catch (e: HttpException) {
-        _error.value = e.message
+        if (isRefreshCall) _isRefreshing.value = true else _loading.value = true
+        _error.value = null
+        value.value = null
+
+        if (!networkStatusManager.isConnected()) {
+          delay(500)
+          _error.value = Constants.ERROR_MESSAGE
+          return@launch
+        }
+        val result = withContext(Dispatchers.IO) { fn() }
+        value.value = result
       } catch (e: Exception) {
-        _error.value = e.message
+        _error.value = e.message ?: "Unknown error"
       } finally {
-        _isRefreshing.value = false
         _loading.value = false
+        _isRefreshing.value = false
       }
+    }
+  }
+
+  fun fetchExploreData(isRefreshCall: Boolean = false) {
+    callApi(value = _exploreData, isRefreshCall = isRefreshCall) {
+      moctaleApiUseCase.exploreUseCase()
     }
   }
 }

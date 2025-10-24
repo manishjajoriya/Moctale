@@ -55,6 +55,7 @@ fun ScheduleScreen(
   val scheduleDataPagingItem = scheduleData?.collectAsLazyPagingItems()
   val loadState = scheduleDataPagingItem?.loadState
   var loadStateLoading by remember { mutableStateOf(false) }
+  val loading by viewModel.loading.collectAsState()
   val isRefreshing by viewModel.isRefreshing.collectAsState()
   val error by viewModel.error.collectAsState()
   var loadStateError by remember { mutableStateOf<String?>(null) }
@@ -97,63 +98,74 @@ fun ScheduleScreen(
       onRefresh = {
         when (selectedCategory) {
           Category.MOVIE ->
-              viewModel.fetchScheduleData(selectedTimeFilter, selectedMovieCategory.value)
+              viewModel.fetchScheduleData(
+                  selectedTimeFilter,
+                  selectedMovieCategory.value,
+                  isRefreshCall = true,
+              )
           Category.SERIES ->
-              viewModel.fetchScheduleData(selectedTimeFilter, selectedSeriesCategory.value)
-          else -> viewModel.fetchScheduleData(selectedTimeFilter, null)
+              viewModel.fetchScheduleData(
+                  selectedTimeFilter,
+                  selectedSeriesCategory.value,
+                  isRefreshCall = true,
+              )
+          else -> viewModel.fetchScheduleData(selectedTimeFilter, null, isRefreshCall = true)
         }
       },
       modifier = Modifier.padding(paddingValues),
   ) {
     Column(modifier = Modifier.padding(horizontal = 12.dp).fillMaxSize()) {
-
-      // Time Filter
-      TabSelector(selectedTimeFilter) { timeFilter ->
-        selectedTimeFilter = timeFilter
-        selectedCategory = Category.ALL
-        selectedMovieCategory = MovieCategory.IN_THEATRES
-        selectedSeriesCategory = SeriesCategory.NEW_SHOW
-      }
-
-      // Category
-      if (selectedCategory == Category.ALL) {
-        FilterSelector(fields = Category.entries, selectedFiled = selectedCategory, onClear = {}) {
-            category ->
-          selectedCategory = category
-        }
-      }
-
-      // Movie Filter Options
-      if (selectedCategory == Category.MOVIE) {
-        FilterSelector(
-            fields = MovieCategory.entries,
-            selectedFiled = selectedMovieCategory,
-            onClear = {
-              selectedCategory = Category.ALL
-              selectedMovieCategory = MovieCategory.IN_THEATRES
-            },
-        ) { category ->
-          selectedMovieCategory = category
-        }
-      }
-
-      // Series Filter Options
-      if (selectedCategory == Category.SERIES) {
-        FilterSelector(
-            fields = SeriesCategory.entries,
-            selectedFiled = selectedSeriesCategory,
-            onClear = {
-              selectedCategory = Category.ALL
-              selectedSeriesCategory = SeriesCategory.NEW_SHOW
-            },
-        ) { category ->
-          selectedSeriesCategory = category
-        }
-      }
-
-      Spacer(modifier = Modifier.height(8.dp))
-
       if (scheduleDataPagingItem != null && scheduleDataPagingItem.itemCount != 0) {
+
+        // Time Filter
+        TabSelector(selectedTimeFilter) { timeFilter ->
+          selectedTimeFilter = timeFilter
+          selectedCategory = Category.ALL
+          selectedMovieCategory = MovieCategory.IN_THEATRES
+          selectedSeriesCategory = SeriesCategory.NEW_SHOW
+        }
+
+        // Category
+        if (selectedCategory == Category.ALL) {
+          FilterSelector(
+              fields = Category.entries,
+              selectedFiled = selectedCategory,
+              onClear = {},
+          ) { category ->
+            selectedCategory = category
+          }
+        }
+
+        // Movie Filter Options
+        if (selectedCategory == Category.MOVIE) {
+          FilterSelector(
+              fields = MovieCategory.entries,
+              selectedFiled = selectedMovieCategory,
+              onClear = {
+                selectedCategory = Category.ALL
+                selectedMovieCategory = MovieCategory.IN_THEATRES
+              },
+          ) { category ->
+            selectedMovieCategory = category
+          }
+        }
+
+        // Series Filter Options
+        if (selectedCategory == Category.SERIES) {
+          FilterSelector(
+              fields = SeriesCategory.entries,
+              selectedFiled = selectedSeriesCategory,
+              onClear = {
+                selectedCategory = Category.ALL
+                selectedSeriesCategory = SeriesCategory.NEW_SHOW
+              },
+          ) { category ->
+            selectedSeriesCategory = category
+          }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
         LazyVerticalGrid(
             columns = GridCells.Adaptive(160.dp),
             horizontalArrangement = Arrangement.spacedBy(20.dp),
@@ -205,7 +217,7 @@ fun ScheduleScreen(
             verticalArrangement = Arrangement.Center,
         ) {
           item {
-            if (loadStateLoading) CircularProgressIndicator(color = Pink)
+            if (loadStateLoading || loading) CircularProgressIndicator(color = Pink)
             loadStateError?.let { error ->
               ErrorMessageText(text = error, isPullToRefreshAvailable = true)
             }
