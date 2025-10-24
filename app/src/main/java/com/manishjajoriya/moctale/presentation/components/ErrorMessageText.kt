@@ -18,6 +18,9 @@ fun ErrorMessageText(text: String, isPullToRefreshAvailable: Boolean = false) {
         style = Typography.titleMedium.copy(color = Color.Red.copy(.9f), fontSize = 18.sp),
     )
     if (isPullToRefreshAvailable)
-        Text(text = "Pull to reload", style = Typography.titleMedium.copy(fontSize = 18.sp))
+        Text(
+            text = "Swipe down to reload",
+            style = Typography.titleMedium.copy(fontSize = 18.sp, color = Color.White.copy(.7f)),
+        )
   }
 }
