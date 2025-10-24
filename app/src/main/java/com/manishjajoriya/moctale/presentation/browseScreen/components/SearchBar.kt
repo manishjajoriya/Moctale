@@ -1,8 +1,10 @@
 package com.manishjajoriya.moctale.presentation.browseScreen.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -23,6 +25,15 @@ fun SearchBar(value: String, placeHolderText: String, onValueChange: (String) ->
       singleLine = true,
       leadingIcon = {
         Icon(painter = painterResource(R.drawable.ic_search_icon), contentDescription = null)
+      },
+      trailingIcon = {
+        IconButton(onClick = { onValueChange("") }) {
+          Icon(
+              painter = painterResource(R.drawable.ic_cross_mark_icon),
+              contentDescription = null,
+              modifier = Modifier.size(24.dp),
+          )
+        }
       },
       placeholder = {
         Text(text = placeHolderText, style = Typography.titleMedium.copy(color = Color.Gray))

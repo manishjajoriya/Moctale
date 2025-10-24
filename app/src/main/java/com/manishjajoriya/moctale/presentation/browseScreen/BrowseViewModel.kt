@@ -94,13 +94,9 @@ constructor(
     }
   }
 
-  fun fetchGenres() {
-    viewModelScope.launch(Dispatchers.IO) {
-      try {
-        _genres.value = moctaleApiUseCase.browseUseCase.genres()
-      } catch (e: Exception) {
-        e.printStackTrace()
-      }
+  fun fetchGenres(isRefreshCall: Boolean = false) {
+    callApi(value = _genres, isRefreshCall = isRefreshCall) {
+      moctaleApiUseCase.browseUseCase.genres()
     }
   }
 
