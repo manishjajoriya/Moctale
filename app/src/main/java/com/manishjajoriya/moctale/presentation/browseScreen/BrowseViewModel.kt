@@ -100,13 +100,9 @@ constructor(
     }
   }
 
-  fun fetchCountries() {
-    viewModelScope.launch(Dispatchers.IO) {
-      try {
-        _countries.value = moctaleApiUseCase.browseUseCase.countries()
-      } catch (e: Exception) {
-        e.printStackTrace()
-      }
+  fun fetchCountries(isRefreshCall: Boolean = false) {
+    callApi(value = _countries, isRefreshCall = isRefreshCall) {
+      moctaleApiUseCase.browseUseCase.countries()
     }
   }
 
