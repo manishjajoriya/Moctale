@@ -106,13 +106,9 @@ constructor(
     }
   }
 
-  fun fetchLanguages() {
-    viewModelScope.launch(Dispatchers.IO) {
-      try {
-        _languages.value = moctaleApiUseCase.browseUseCase.languages()
-      } catch (e: Exception) {
-        e.printStackTrace()
-      }
+  fun fetchLanguages(isRefreshCall: Boolean = false) {
+    callApi(value = _languages, isRefreshCall = isRefreshCall) {
+      moctaleApiUseCase.browseUseCase.languages()
     }
   }
 

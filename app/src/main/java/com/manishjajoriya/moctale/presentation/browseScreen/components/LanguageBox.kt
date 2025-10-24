@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,8 +28,8 @@ fun LanguageBox(language: Language, onClick: () -> Unit) {
       modifier =
           Modifier.clickable(onClick = onClick)
               .height(160.dp)
-              .background(Color(0xFF171717))
-              .padding(8.dp), // padding around the whole column
+              .clip(RoundedCornerShape(16.dp))
+              .background(Color(0xFF171717)),
       horizontalAlignment = Alignment.CenterHorizontally,
       verticalArrangement = Arrangement.Center,
   ) {
