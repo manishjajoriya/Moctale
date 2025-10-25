@@ -40,9 +40,9 @@ constructor(
   val error = _error.asStateFlow()
 
   fun <T : Any> callApi(
-      value: MutableStateFlow<Flow<PagingData<T>>?>,
+      value: MutableStateFlow<T?>,
       isRefreshCall: Boolean,
-      fn: suspend () -> Flow<PagingData<T>>,
+      fn: suspend () -> T,
   ) {
     viewModelScope.launch {
       try {

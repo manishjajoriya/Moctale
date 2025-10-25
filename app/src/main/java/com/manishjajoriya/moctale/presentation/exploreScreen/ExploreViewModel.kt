@@ -36,9 +36,9 @@ constructor(
   val error = _error.asStateFlow()
 
   fun <T : Any> callApi(
-      value: MutableStateFlow<List<T>?>,
+      value: MutableStateFlow<T?>,
       isRefreshCall: Boolean,
-      fn: suspend () -> List<T>,
+      fn: suspend () -> T,
   ) {
     viewModelScope.launch {
       try {

@@ -1,5 +1,6 @@
 package com.manishjajoriya.moctale.presentation.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,7 +12,10 @@ import com.manishjajoriya.moctale.ui.theme.Typography
 
 @Composable
 fun ErrorMessageText(text: String, isPullToRefreshAvailable: Boolean = false) {
-  Column(horizontalAlignment = Alignment.CenterHorizontally) {
+  Column(
+      horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.Center,
+  ) {
     Text(
         text = text,
         textAlign = TextAlign.Center,
