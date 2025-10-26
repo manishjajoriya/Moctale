@@ -9,14 +9,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -33,13 +34,21 @@ fun ExploreScreen(
     viewModel: ExploreViewModel,
     navController: NavController,
 ) {
-  LaunchedEffect(Unit) { viewModel.fetchExploreData() }
-
-  val loading by viewModel.loading.collectAsState()
+  // Viewmodel states
   val exploreData by viewModel.exploreData.collectAsState()
-  val data = exploreData
+  val hasExploreDataFetched by viewModel.hasExploreDataFetched.collectAsState()
+  val loading by viewModel.loading.collectAsState()
   val isRefreshing by viewModel.isRefreshing.collectAsState()
   val error by viewModel.error.collectAsState()
+
+  // Local states
+  val localExploreData = exploreData
+  val gridState = rememberSaveable(saver = LazyGridState.Saver) { LazyGridState() }
+
+  if (!hasExploreDataFetched) {
+    viewModel.fetchExploreData()
+    viewModel.setHasExploreDataFetched(true)
+  }
 
   PullToRefreshBox(
       isRefreshing = isRefreshing,
@@ -57,14 +66,15 @@ fun ExploreScreen(
       }
     }
     Column(modifier = Modifier.padding(horizontal = 16.dp).padding(top = 20.dp).fillMaxSize()) {
-      if (data != null) {
+      if (localExploreData != null) {
         LazyVerticalGrid(
+            state = gridState,
             modifier = Modifier.fillMaxSize(),
             columns = GridCells.Adaptive(160.dp),
             horizontalArrangement = Arrangement.spacedBy(20.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
-          data.forEach { exploreItem ->
+          localExploreData.forEach { exploreItem ->
             item(span = { GridItemSpan(maxLineSpan) }) { SectionTitle(exploreItem) }
 
             itemsIndexed(exploreItem.contentList) { index, content ->

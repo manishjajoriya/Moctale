@@ -26,6 +26,9 @@ constructor(
   private val _exploreData = MutableStateFlow<List<ExploreItem>?>(null)
   val exploreData = _exploreData.asStateFlow()
 
+  private val _hasExploreDataFetched = MutableStateFlow(false)
+  val hasExploreDataFetched = _hasExploreDataFetched.asStateFlow()
+
   private val _loading = MutableStateFlow(false)
   val loading = _loading.asStateFlow()
 
@@ -66,5 +69,9 @@ constructor(
     callApi(value = _exploreData, isRefreshCall = isRefreshCall) {
       moctaleApiUseCase.exploreUseCase()
     }
+  }
+
+  fun setHasExploreDataFetched(new: Boolean) {
+    _hasExploreDataFetched.value = new
   }
 }
