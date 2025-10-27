@@ -1,5 +1,6 @@
 package com.manishjajoriya.moctale.presentation.scheduleScreen
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -21,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,7 +37,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.manishjajoriya.moctale.domain.model.schedule.Category
 import com.manishjajoriya.moctale.domain.model.schedule.MovieCategory
 import com.manishjajoriya.moctale.domain.model.schedule.SeriesCategory
-import com.manishjajoriya.moctale.domain.model.schedule.TimeFilter
 import com.manishjajoriya.moctale.domain.model.schedule.UiScheduleItem
 import com.manishjajoriya.moctale.navgraph.Routes
 import com.manishjajoriya.moctale.presentation.components.ErrorMessageText
@@ -51,34 +53,24 @@ fun ScheduleScreen(
     navController: NavHostController,
     viewModel: ScheduleViewModel,
 ) {
+  // Viewmodel state
   val scheduleData by viewModel.scheduleData.collectAsState()
-  val scheduleDataPagingItem = scheduleData?.collectAsLazyPagingItems()
-  val loadState = scheduleDataPagingItem?.loadState
-  var loadStateLoading by remember { mutableStateOf(false) }
   val loading by viewModel.loading.collectAsState()
   val isRefreshing by viewModel.isRefreshing.collectAsState()
   val error by viewModel.error.collectAsState()
+  val selectedTimeFilter by viewModel.selectedTimeFilter.collectAsState()
+  val selectedCategory by viewModel.selectedCategory.collectAsState()
+  val selectedMovieCategory by viewModel.selectedMovieCategory.collectAsState()
+  val selectedSeriesCategory by viewModel.selectedSeriesCategory.collectAsState()
+
+  // Local state
+  val scheduleDataPagingItem = scheduleData?.collectAsLazyPagingItems()
+  val loadState = scheduleDataPagingItem?.loadState
+  var loadStateLoading by remember { mutableStateOf(false) }
   var loadStateError by remember { mutableStateOf<String?>(null) }
+  val gridState = rememberSaveable(saver = LazyGridState.Saver) { LazyGridState() }
 
-  // Filter
-  var selectedTimeFilter by remember { mutableStateOf(TimeFilter.TODAY) }
-  var selectedCategory by remember { mutableStateOf(Category.ALL) }
-  var selectedMovieCategory by remember { mutableStateOf(MovieCategory.IN_THEATRES) }
-  var selectedSeriesCategory by remember { mutableStateOf(SeriesCategory.NEW_SHOW) }
-
-  LaunchedEffect(
-      selectedTimeFilter,
-      selectedCategory,
-      selectedMovieCategory,
-      selectedSeriesCategory,
-  ) {
-    when (selectedCategory) {
-      Category.MOVIE -> viewModel.fetchScheduleData(selectedTimeFilter, selectedMovieCategory.value)
-      Category.SERIES ->
-          viewModel.fetchScheduleData(selectedTimeFilter, selectedSeriesCategory.value)
-      else -> viewModel.fetchScheduleData(selectedTimeFilter, null)
-    }
-  }
+  LaunchedEffect(selectedTimeFilter) { gridState.scrollToItem(0) }
 
   LaunchedEffect(loadState) {
     loadState?.let {
@@ -99,32 +91,25 @@ fun ScheduleScreen(
         when (selectedCategory) {
           Category.MOVIE ->
               viewModel.fetchScheduleData(
-                  selectedTimeFilter,
-                  selectedMovieCategory.value,
                   isRefreshCall = true,
               )
           Category.SERIES ->
               viewModel.fetchScheduleData(
-                  selectedTimeFilter,
-                  selectedSeriesCategory.value,
                   isRefreshCall = true,
               )
-          else -> viewModel.fetchScheduleData(selectedTimeFilter, null, isRefreshCall = true)
+          else -> viewModel.fetchScheduleData(isRefreshCall = true)
         }
       },
       modifier = Modifier.padding(paddingValues),
   ) {
     Column(modifier = Modifier.padding(horizontal = 12.dp).fillMaxSize()) {
-      if (scheduleDataPagingItem != null && scheduleDataPagingItem.itemCount != 0) {
+      // Time Filter
+      TabSelector(selectedTimeFilter) { timeFilter ->
+        viewModel.setSelectedTimeFilter(new = timeFilter)
+        viewModel.resetAllFilterToDefault()
+      }
 
-        // Time Filter
-        TabSelector(selectedTimeFilter) { timeFilter ->
-          selectedTimeFilter = timeFilter
-          selectedCategory = Category.ALL
-          selectedMovieCategory = MovieCategory.IN_THEATRES
-          selectedSeriesCategory = SeriesCategory.NEW_SHOW
-        }
-
+      AnimatedContent(targetState = selectedCategory) { selectedCategory ->
         // Category
         if (selectedCategory == Category.ALL) {
           FilterSelector(
@@ -132,7 +117,7 @@ fun ScheduleScreen(
               selectedFiled = selectedCategory,
               onClear = {},
           ) { category ->
-            selectedCategory = category
+            viewModel.setSelectedCategory(new = category)
           }
         }
 
@@ -141,12 +126,9 @@ fun ScheduleScreen(
           FilterSelector(
               fields = MovieCategory.entries,
               selectedFiled = selectedMovieCategory,
-              onClear = {
-                selectedCategory = Category.ALL
-                selectedMovieCategory = MovieCategory.IN_THEATRES
-              },
+              onClear = { viewModel.resetAllFilterToDefault() },
           ) { category ->
-            selectedMovieCategory = category
+            viewModel.setSelectedMovieCategory(new = category)
           }
         }
 
@@ -155,18 +137,18 @@ fun ScheduleScreen(
           FilterSelector(
               fields = SeriesCategory.entries,
               selectedFiled = selectedSeriesCategory,
-              onClear = {
-                selectedCategory = Category.ALL
-                selectedSeriesCategory = SeriesCategory.NEW_SHOW
-              },
+              onClear = { viewModel.resetAllFilterToDefault() },
           ) { category ->
-            selectedSeriesCategory = category
+            viewModel.setSelectedSeriesCategory(new = category)
           }
         }
+      }
 
-        Spacer(modifier = Modifier.height(8.dp))
+      Spacer(modifier = Modifier.height(8.dp))
 
+      if (scheduleDataPagingItem != null && scheduleDataPagingItem.itemCount != 0) {
         LazyVerticalGrid(
+            state = gridState,
             columns = GridCells.Adaptive(160.dp),
             horizontalArrangement = Arrangement.spacedBy(20.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
