@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.manishjajoriya.moctale.navgraph.Routes
@@ -24,6 +26,7 @@ import com.manishjajoriya.moctale.presentation.browseScreen.components.GenreBox
 import com.manishjajoriya.moctale.presentation.browseScreen.components.SearchBar
 import com.manishjajoriya.moctale.presentation.components.ErrorMessageText
 import com.manishjajoriya.moctale.ui.theme.Pink
+import com.manishjajoriya.moctale.ui.theme.Typography
 
 @Composable
 fun GenreScreen(
@@ -51,6 +54,12 @@ fun GenreScreen(
           verticalArrangement = Arrangement.spacedBy(20.dp),
       ) {
         item {}
+        item {
+          Text(
+            text = "Genres",
+            style = Typography.headlineMedium.copy(fontWeight = FontWeight.SemiBold),
+          )
+        }
         item {
           SearchBar(
               value = searchText,

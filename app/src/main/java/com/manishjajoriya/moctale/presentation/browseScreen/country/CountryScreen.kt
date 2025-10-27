@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.manishjajoriya.moctale.navgraph.Routes
@@ -27,6 +29,7 @@ import com.manishjajoriya.moctale.presentation.browseScreen.components.CountryBo
 import com.manishjajoriya.moctale.presentation.browseScreen.components.SearchBar
 import com.manishjajoriya.moctale.presentation.components.ErrorMessageText
 import com.manishjajoriya.moctale.ui.theme.Pink
+import com.manishjajoriya.moctale.ui.theme.Typography
 
 @Composable
 fun CountryScreen(
@@ -55,6 +58,12 @@ fun CountryScreen(
           verticalArrangement = Arrangement.spacedBy(20.dp),
       ) {
         item(span = { GridItemSpan(maxLineSpan) }) {}
+        item(span = { GridItemSpan(maxLineSpan) }) {
+          Text(
+            text = "Countries",
+            style = Typography.headlineMedium.copy(fontWeight = FontWeight.SemiBold),
+          )
+        }
         item(span = { GridItemSpan(maxLineSpan) }) {
           SearchBar(value = searchText, placeHolderText = "Search country") { searchText = it }
         }
