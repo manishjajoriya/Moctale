@@ -6,4 +6,6 @@ interface PreferencesRepository {
   suspend fun setAuthToken(token: String)
 
   fun getAuthToken(): Flow<String?>
+
+  suspend fun clearAuthTone()
 }

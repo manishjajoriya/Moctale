@@ -85,4 +85,12 @@ constructor(
       false
     }
   }
+
+  fun clearAuthToken() {
+    viewModelScope.launch(Dispatchers.IO) {
+      preferencesRepository.clearAuthTone()
+      preferencesManager.setToken(null)
+      _isLogin.value = false
+    }
+  }
 }

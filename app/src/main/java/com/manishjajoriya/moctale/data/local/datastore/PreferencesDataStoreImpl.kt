@@ -25,4 +25,8 @@ class PreferencesDataStoreImpl(private val context: Context) : PreferencesReposi
   override fun getAuthToken(): Flow<String?> {
     return context.dataStore.data.map { pref -> pref[AUTH_TOKEN_KEY] }
   }
+
+  override suspend fun clearAuthTone() {
+    context.dataStore.edit { pref -> pref.remove(AUTH_TOKEN_KEY) }
+  }
 }

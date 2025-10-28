@@ -23,6 +23,7 @@ import com.manishjajoriya.moctale.presentation.contentScreen.ContentScreen
 import com.manishjajoriya.moctale.presentation.contentScreen.ContentViewModel
 import com.manishjajoriya.moctale.presentation.exploreScreen.ExploreScreen
 import com.manishjajoriya.moctale.presentation.exploreScreen.ExploreViewModel
+import com.manishjajoriya.moctale.presentation.menuScreen.MenuScreen
 import com.manishjajoriya.moctale.presentation.personScreen.PersonScreen
 import com.manishjajoriya.moctale.presentation.personScreen.PersonViewModel
 import com.manishjajoriya.moctale.presentation.scheduleScreen.ScheduleScreen
@@ -155,5 +156,19 @@ fun NavGraph(
     }
 
     composable(Routes.ComingSoonScreen.route) { ComingSoonScree(paddingValues = paddingValues) }
+
+    composable(
+        Routes.MenuScreen.route,
+        enterTransition = {
+          slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Down, tween(750)) +
+              fadeIn(tween(750))
+        },
+        popExitTransition = {
+          slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Up, tween(500)) +
+              fadeOut(tween(500))
+        },
+    ) {
+      MenuScreen(paddingValues = paddingValues, mainViewModel)
+    }
   }
 }

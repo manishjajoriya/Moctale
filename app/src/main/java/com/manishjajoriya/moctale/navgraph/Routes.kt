@@ -25,4 +25,6 @@ sealed class Routes(val route: String) {
   object LanguageScreen : Routes(route = "language")
 
   object ComingSoonScreen : Routes(route = "coming-soon")
+
+  object MenuScreen : Routes(route = "menu")
 }

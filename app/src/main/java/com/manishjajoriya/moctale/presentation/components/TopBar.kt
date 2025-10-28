@@ -30,6 +30,7 @@ fun TopBar(navController: NavController) {
   val navBackStackEntry by navController.currentBackStackEntryAsState()
   val currentRoute = navBackStackEntry?.destination?.route
   val isSearchScreen = currentRoute == Routes.SearchScreen.route
+  val isMenuScreen = currentRoute == Routes.MenuScreen.route
 
   Column(modifier = Modifier.statusBarsPadding()) {
     Row(
@@ -81,9 +82,16 @@ fun TopBar(navController: NavController) {
               tint = Color.Gray,
           )
         }
-        IconButton(onClick = {}) {
+        IconButton(
+            onClick = {
+              if (isMenuScreen) navController.popBackStack()
+              else navController.navigate(Routes.MenuScreen.route)
+            }
+        ) {
           Icon(
-              painter = painterResource(R.drawable.ic_three_dot_icon),
+              painter =
+                  if (isMenuScreen) painterResource(R.drawable.ic_cross_mark_icon)
+                  else painterResource(R.drawable.ic_three_dot_icon),
               contentDescription = "menu",
               tint = Color.Gray,
           )
