@@ -15,10 +15,10 @@ import androidx.compose.ui.unit.dp
 import com.manishjajoriya.moctale.ui.theme.Typography
 
 @Composable
-fun CustomButton(modifier: Modifier = Modifier, icon: Int, title: String, color: Color) {
+fun CustomButton(modifier: Modifier = Modifier, icon: Int, title: String, color: Color, onClick: () -> Unit) {
   Button(
       modifier = modifier,
-      onClick = {},
+      onClick = onClick,
       colors = ButtonDefaults.buttonColors(containerColor = color),
   ) {
     Icon(painter = painterResource(icon), contentDescription = null, tint = Color.White)

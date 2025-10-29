@@ -9,6 +9,7 @@ import com.manishjajoriya.moctale.data.remote.api.MoctaleApi
 import com.manishjajoriya.moctale.data.repository.MoctaleRepositoryImpl
 import com.manishjajoriya.moctale.domain.repository.MoctaleRepository
 import com.manishjajoriya.moctale.domain.repository.PreferencesRepository
+import com.manishjajoriya.moctale.domain.usecase.ActivityUseCase
 import com.manishjajoriya.moctale.domain.usecase.BrowseUseCase
 import com.manishjajoriya.moctale.domain.usecase.ContentUseCase
 import com.manishjajoriya.moctale.domain.usecase.ExploreUseCase
@@ -73,6 +74,10 @@ object Module {
 
   @Provides
   @Singleton
+  fun provideActivityUseCase(moctaleApi: MoctaleApi) = ActivityUseCase(moctaleApi = moctaleApi)
+
+  @Provides
+  @Singleton
   fun providePersonUseCase(moctaleApi: MoctaleApi) = PersonUseCase(moctaleApi = moctaleApi)
 
   @Provides
@@ -93,6 +98,7 @@ object Module {
       validateUseCase: ValidateUseCase,
       exploreUseCase: ExploreUseCase,
       contentUseCase: ContentUseCase,
+      activityUseCase: ActivityUseCase,
       personUseCase: PersonUseCase,
       scheduleUseCase: ScheduleUseCase,
       searchUseCase: SearchUseCase,
@@ -102,6 +108,7 @@ object Module {
           validateUseCase,
           exploreUseCase,
           contentUseCase,
+          activityUseCase,
           personUseCase,
           scheduleUseCase,
           searchUseCase,
