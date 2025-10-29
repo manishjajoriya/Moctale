@@ -1,10 +1,9 @@
 package com.manishjajoriya.moctale.presentation.browseScreen
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.manishjajoriya.moctale.Constants
+import com.manishjajoriya.moctale.core.base.BaseViewModel
 import com.manishjajoriya.moctale.data.manager.NetworkStatusManager
 import com.manishjajoriya.moctale.domain.model.browse.Data
 import com.manishjajoriya.moctale.domain.model.browse.category.Category
@@ -16,12 +15,10 @@ import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @HiltViewModel
 class BrowseViewModel
@@ -29,8 +26,8 @@ class BrowseViewModel
 constructor(
     private val moctaleApiUseCase: MoctaleApiUseCase,
     private val moctaleRepository: MoctaleRepository,
-    private val networkStatusManager: NetworkStatusManager,
-) : ViewModel() {
+    networkStatusManager: NetworkStatusManager,
+) : BaseViewModel(networkStatusManager) {
 
   private val _categories = MutableStateFlow<List<Category>?>(null)
   val categories = _categories.asStateFlow()
@@ -58,56 +55,50 @@ constructor(
   private val _error = MutableStateFlow<String?>(null)
   val error = _error.asStateFlow()
 
-  fun <T : Any> callApi(
-      value: MutableStateFlow<T?>,
-      isRefreshCall: Boolean,
-      fn: suspend () -> T,
-  ) {
-    viewModelScope.launch {
-      try {
-        if (isRefreshCall) _isRefreshing.value = true else _loading.value = true
-        _error.value = null
-        value.value = null
-
-        if (!networkStatusManager.isConnected()) {
-          delay(500)
-          _error.value = Constants.ERROR_MESSAGE
-          return@launch
-        }
-        val result = withContext(Dispatchers.IO) { fn() }
-        value.value = result
-      } catch (e: Exception) {
-        _error.value = e.message ?: "Unknown error"
-      } finally {
-        _isRefreshing.value = false
-        _loading.value = false
-      }
-    }
-  }
-
   fun fetchCategories(isRefreshCall: Boolean = false) {
     callApi(
-        value = _categories,
+        onValue = { _categories.value = it },
         isRefreshCall = isRefreshCall,
+        onRefresh = { _isRefreshing.value = it },
+        onLoading = { _loading.value = it },
+        onError = { _error.value = it },
     ) {
       moctaleApiUseCase.browseUseCase.categories()
     }
   }
 
   fun fetchGenres(isRefreshCall: Boolean = false) {
-    callApi(value = _genres, isRefreshCall = isRefreshCall) {
+    callApi(
+        onValue = { _genres.value = it },
+        isRefreshCall = isRefreshCall,
+        onRefresh = { _isRefreshing.value = it },
+        onLoading = { _loading.value = it },
+        onError = { _error.value = it },
+    ) {
       moctaleApiUseCase.browseUseCase.genres()
     }
   }
 
   fun fetchCountries(isRefreshCall: Boolean = false) {
-    callApi(value = _countries, isRefreshCall = isRefreshCall) {
+    callApi(
+        onValue = { _countries.value = it },
+        isRefreshCall = isRefreshCall,
+        onRefresh = { _isRefreshing.value = it },
+        onLoading = { _loading.value = it },
+        onError = { _error.value = it },
+    ) {
       moctaleApiUseCase.browseUseCase.countries()
     }
   }
 
   fun fetchLanguages(isRefreshCall: Boolean = false) {
-    callApi(value = _languages, isRefreshCall = isRefreshCall) {
+    callApi(
+        onValue = { _languages.value = it },
+        isRefreshCall = isRefreshCall,
+        onRefresh = { _isRefreshing.value = it },
+        onLoading = { _loading.value = it },
+        onError = { _error.value = it },
+    ) {
       moctaleApiUseCase.browseUseCase.languages()
     }
   }
@@ -123,9 +114,7 @@ constructor(
             moctaleApiUseCase.browseUseCase
                 .categoryData(browseScreen = browseSlug, category, page = 1)
                 .count
-      } catch (e: Exception) {
-        e.printStackTrace()
-      }
+      } catch (_: Exception) {}
     }
   }
 }
