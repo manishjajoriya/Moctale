@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.manishjajoriya.moctale.data.manager.NetworkStatusManager
 import com.manishjajoriya.moctale.data.manager.PreferencesManager
+import com.manishjajoriya.moctale.domain.model.identity.IdentityUserProfile
 import com.manishjajoriya.moctale.domain.repository.PreferencesRepository
 import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +14,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @HiltViewModel
 class MainViewModel
@@ -44,52 +44,57 @@ constructor(
       return
     }
     val cleanToken = token.trim().replace(Regex("[\\r\\n]"), "")
-    viewModelScope.launch {
+    viewModelScope.launch(Dispatchers.IO) {
       _loading.value = true
       preferencesManager.setToken(cleanToken)
-      val isValid = validateToken()
-      if (isValid) {
+      val identityUserProfile = getUserProfile()
+      if (identityUserProfile != null) {
         _isLogin.value = true
-        withContext(Dispatchers.IO) { preferencesRepository.setAuthToken(cleanToken) }
+        preferencesRepository.setAuthToken(cleanToken)
+        preferencesManager.setUsername(identityUserProfile.username)
+        preferencesRepository.setUsername(identityUserProfile.username)
       } else {
         _error.value =
             "Invalid token, please recheck your token and remove any new line and whitespace"
+        preferencesManager.setToken(null)
       }
       _loading.value = false
     }
   }
 
   fun fetchTokenFromLocalStorage() {
-    viewModelScope.launch {
+    viewModelScope.launch(Dispatchers.IO) {
       _loading.value = true
 
-      val savedToken =
-          withContext(Dispatchers.IO) { preferencesRepository.getAuthToken().firstOrNull() }
+      val savedToken = preferencesRepository.getAuthToken().firstOrNull()
+      val savedUsername = preferencesRepository.getUsername().firstOrNull()
 
-      if (savedToken.isNullOrEmpty()) {
+      if (savedToken.isNullOrEmpty() || savedUsername.isNullOrEmpty()) {
         _isLogin.value = false
         _loading.value = false
         return@launch
       }
       preferencesManager.setToken(savedToken)
+      preferencesManager.setUsername(savedUsername)
       _isLogin.value = true
       _loading.value = false
     }
   }
 
-  private suspend fun validateToken(): Boolean {
+  private suspend fun getUserProfile(): IdentityUserProfile? {
     return try {
-      moctaleApiUseCase.validateUseCase()
-      true
+      moctaleApiUseCase.identityUseCase.identityUserProfile()
     } catch (_: Exception) {
-      false
+      null
     }
   }
 
-  fun clearAuthToken() {
+  fun logout() {
     viewModelScope.launch(Dispatchers.IO) {
       preferencesRepository.clearAuthTone()
+      preferencesRepository.clearUsername()
       preferencesManager.setToken(null)
+      preferencesManager.setUsername(null)
       _isLogin.value = false
     }
   }

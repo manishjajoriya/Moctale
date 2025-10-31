@@ -17,6 +17,7 @@ class PreferencesDataStoreImpl(private val context: Context) : PreferencesReposi
       preferencesDataStore(name = Constants.PREFERENCES_NAME)
 
   private val AUTH_TOKEN_KEY = stringPreferencesKey(Constants.AUTH_TOKEN)
+  private val USERNAME = stringPreferencesKey(Constants.USERNAME)
 
   override suspend fun setAuthToken(token: String) {
     context.dataStore.edit { pref -> pref[AUTH_TOKEN_KEY] = token }
@@ -28,5 +29,17 @@ class PreferencesDataStoreImpl(private val context: Context) : PreferencesReposi
 
   override suspend fun clearAuthTone() {
     context.dataStore.edit { pref -> pref.remove(AUTH_TOKEN_KEY) }
+  }
+
+  override suspend fun setUsername(username: String) {
+    context.dataStore.edit { pref -> pref[USERNAME] = username }
+  }
+
+  override fun getUsername(): Flow<String?> {
+    return context.dataStore.data.map { pref -> pref[USERNAME] }
+  }
+
+  override suspend fun clearUsername() {
+    context.dataStore.edit { pref -> pref.remove(USERNAME) }
   }
 }

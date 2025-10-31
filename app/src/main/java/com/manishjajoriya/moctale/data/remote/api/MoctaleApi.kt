@@ -8,13 +8,13 @@ import com.manishjajoriya.moctale.domain.model.browse.language.Language
 import com.manishjajoriya.moctale.domain.model.content.Content
 import com.manishjajoriya.moctale.domain.model.content.info.ContentInfo
 import com.manishjajoriya.moctale.domain.model.explore.ExploreItem
+import com.manishjajoriya.moctale.domain.model.identity.IdentityUserProfile
 import com.manishjajoriya.moctale.domain.model.person.Person
 import com.manishjajoriya.moctale.domain.model.person.PersonContent
 import com.manishjajoriya.moctale.domain.model.schedule.Schedule
 import com.manishjajoriya.moctale.domain.model.search.content.SearchContent
 import com.manishjajoriya.moctale.domain.model.search.person.SearchPerson
 import com.manishjajoriya.moctale.domain.model.search.user.SearchUser
-import com.manishjajoriya.moctale.domain.model.validate.Validate
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -24,7 +24,7 @@ import retrofit2.http.Query
 interface MoctaleApi {
 
   // Validate
-  @GET("identity/validate") suspend fun validate(): Validate
+  @GET("identity/user/profile") suspend fun identityUserProfile(): IdentityUserProfile
 
   // Explore
   @GET("explore") suspend fun explore(): List<ExploreItem>
@@ -36,8 +36,7 @@ interface MoctaleApi {
   @GET("activity/content/{slug}/info")
   suspend fun contentInfo(@Path("slug") slug: String): ContentInfo
 
-  @POST("activity/content/{slug}/watched")
-  suspend fun markAsWatched(@Path("slug") slug: String)
+  @POST("activity/content/{slug}/watched") suspend fun markAsWatched(@Path("slug") slug: String)
 
   @DELETE("activity/content/{slug}/watched")
   suspend fun deleteMarkAsWatched(@Path("slug") slug: String)

@@ -8,4 +8,10 @@ interface PreferencesRepository {
   fun getAuthToken(): Flow<String?>
 
   suspend fun clearAuthTone()
+
+  suspend fun setUsername(username: String)
+
+  fun getUsername(): Flow<String?>
+
+  suspend fun clearUsername()
 }

@@ -38,7 +38,7 @@ fun MenuScreen(paddingValues: PaddingValues, mainViewModel: MainViewModel) {
   ) {
     TextButton(
         onClick = {
-          mainViewModel.clearAuthToken()
+          mainViewModel.logout()
           Toast.makeText(context, "You have been log out.", Toast.LENGTH_SHORT).show()
         },
         modifier = Modifier.fillMaxWidth(.9f).height(52.dp),

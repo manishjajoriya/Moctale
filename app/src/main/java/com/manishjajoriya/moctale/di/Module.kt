@@ -17,7 +17,7 @@ import com.manishjajoriya.moctale.domain.usecase.MoctaleApiUseCase
 import com.manishjajoriya.moctale.domain.usecase.PersonUseCase
 import com.manishjajoriya.moctale.domain.usecase.ScheduleUseCase
 import com.manishjajoriya.moctale.domain.usecase.SearchUseCase
-import com.manishjajoriya.moctale.domain.usecase.ValidateUseCase
+import com.manishjajoriya.moctale.domain.usecase.IdentityUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -62,7 +62,7 @@ object Module {
 
   @Provides
   @Singleton
-  fun provideValidateUseCase(moctaleApi: MoctaleApi) = ValidateUseCase(moctaleApi = moctaleApi)
+  fun provideValidateUseCase(moctaleApi: MoctaleApi) = IdentityUseCase(moctaleApi = moctaleApi)
 
   @Provides
   @Singleton
@@ -95,17 +95,17 @@ object Module {
   @Provides
   @Singleton
   fun provideMoctaleApiUseCase(
-      validateUseCase: ValidateUseCase,
-      exploreUseCase: ExploreUseCase,
-      contentUseCase: ContentUseCase,
-      activityUseCase: ActivityUseCase,
-      personUseCase: PersonUseCase,
-      scheduleUseCase: ScheduleUseCase,
-      searchUseCase: SearchUseCase,
-      browseUseCase: BrowseUseCase,
+    identityUseCase: IdentityUseCase,
+    exploreUseCase: ExploreUseCase,
+    contentUseCase: ContentUseCase,
+    activityUseCase: ActivityUseCase,
+    personUseCase: PersonUseCase,
+    scheduleUseCase: ScheduleUseCase,
+    searchUseCase: SearchUseCase,
+    browseUseCase: BrowseUseCase,
   ) =
       MoctaleApiUseCase(
-          validateUseCase,
+          identityUseCase,
           exploreUseCase,
           contentUseCase,
           activityUseCase,
