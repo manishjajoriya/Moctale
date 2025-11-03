@@ -1,6 +1,6 @@
 # Moctale for Android
 
-Moctale for Android is a native app written in Kotlin for Android devices. It allows users to access the [Moctale.in](https://www.moctale.in).
+Moctale for Android is a native Android application built with Kotlin. It enables users to seamlessly access and experience [Moctale.in](https://www.moctale.in) directly on their Android devices.
 > [!IMPORTANT]  
 > This project is not affiliated with Moctale.in.  
 > All rights to the original content belong to Moctale.  
@@ -137,7 +137,7 @@ cd moctale
 - [ ] Enable **posting reviews** and **commenting on reviews**
 - [ ] Add **Notifications** screen and **notification badges** in the app
 
-## Images
+## 📱 Preview Images
 
 | Image 1                                                        | Image 2                                                        | Image 3                                                        |
 |----------------------------------------------------------------|----------------------------------------------------------------|----------------------------------------------------------------|
@@ -145,11 +145,11 @@ cd moctale
 
 | Image 4                                                        | Image 5                                                        | Image 6                                                        |
 |----------------------------------------------------------------|----------------------------------------------------------------|----------------------------------------------------------------|
-| <img width="250px" height="auto" alt="4" src="assets/1.png" /> | <img width="250px" height="auto" alt="5" src="assets/5.png" /> | <img width="250px" height="auto" alt="6" src="assets/6.png" /> |
+| <img width="250px" height="auto" alt="4" src="assets/4.png" /> | <img width="250px" height="auto" alt="5" src="assets/5.png" /> | <img width="250px" height="auto" alt="6" src="assets/6.png" /> |
 
 | Image 7                                                        | Image 8                                                        | Image 9                                                        |
 |----------------------------------------------------------------|----------------------------------------------------------------|----------------------------------------------------------------|
-| <img width="250px" height="auto" alt="7" src="assets/1.png" /> | <img width="250px" height="auto" alt="8" src="assets/8.png" /> | <img width="250px" height="auto" alt="9" src="assets/9.png" /> |
+| <img width="250px" height="auto" alt="7" src="assets/7.png" /> | <img width="250px" height="auto" alt="8" src="assets/8.png" /> | <img width="250px" height="auto" alt="9" src="assets/9.png" /> |
 
 
 | Image 10                                                       | Image 11                                                       |
