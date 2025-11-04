@@ -25,7 +25,7 @@ constructor(
     private val networkStatusManager: NetworkStatusManager,
 ) : ViewModel() {
 
-  private val _isLogin = MutableStateFlow(false)
+  private val _isLogin = MutableStateFlow<Boolean?>(null)
   val isLogin = _isLogin.asStateFlow()
 
   private val _loading = MutableStateFlow(false)

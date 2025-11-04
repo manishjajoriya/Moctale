@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.manishjajoriya.moctale.navgraph.NavGraph
@@ -25,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
+    val splashScreen = installSplashScreen()
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
     setContent {
@@ -32,9 +34,12 @@ class MainActivity : ComponentActivity() {
         val navController = rememberNavController()
         var isShowBrowseSheet by remember { mutableStateOf(false) }
         val mainViewModel: MainViewModel = hiltViewModel()
+        val isLogin by mainViewModel.isLogin.collectAsState()
+        splashScreen.setKeepOnScreenCondition { isLogin == null }
+        if (isLogin == null) return@MoctaleTheme
+
         val startDestination =
-            if (mainViewModel.isLogin.collectAsState().value) Routes.ExploreScreen.route
-            else Routes.AuthScreen.route
+            if (isLogin == true) Routes.ExploreScreen.route else Routes.AuthScreen.route
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
@@ -59,9 +64,8 @@ class MainActivity : ComponentActivity() {
               }
             },
         ) { innerPadding ->
-          BrowseSheet(isShowBrowseSheet = isShowBrowseSheet, navController) {
-            isShowBrowseSheet = false
-          }
+          if (isShowBrowseSheet)
+              BrowseSheet(navController = navController) { isShowBrowseSheet = false }
 
           NavGraph(
               paddingValues = innerPadding,

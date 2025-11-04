@@ -47,7 +47,7 @@ fun AuthScreen(
   val error by viewModel.error.collectAsState()
   var loginAttempted by remember { mutableStateOf(false) }
 
-  if (isLogin) navController.navigate(Routes.ExploreScreen.route)
+  if (isLogin == true) navController.navigate(Routes.ExploreScreen.route)
 
   Column(
       modifier = Modifier.fillMaxWidth().fillMaxHeight(.8f),
@@ -66,7 +66,7 @@ fun AuthScreen(
         text =
             "1. Go to mocatle.in and login with your username and password\n" +
                 "2. Right click and go to \"Inspect\" or press F12\n" +
-                "3. Go to Storage > cookies\n" +
+                "3. Go to Storage > Cookies\n" +
                 "4. Copy \"auth_token\" value and paste below",
         modifier = Modifier.fillMaxWidth(.9f),
         style = Typography.bodyLarge.copy(Color.White.copy(.7f)),
@@ -92,7 +92,7 @@ fun AuthScreen(
         minLines = 3,
         maxLines = 3,
         modifier = Modifier.fillMaxWidth(.9f).padding(top = 16.dp).height(120.dp),
-        isError = loginAttempted && !isLogin && !loading,
+        isError = loginAttempted && isLogin != true && !loading,
         colors =
             TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Transparent,
@@ -104,7 +104,6 @@ fun AuthScreen(
             ),
     )
     error?.let { error ->
-      error
       Text(
           error,
           modifier = Modifier.fillMaxWidth(.9f).padding(top = 16.dp),

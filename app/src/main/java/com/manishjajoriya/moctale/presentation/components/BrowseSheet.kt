@@ -39,7 +39,6 @@ import com.manishjajoriya.moctale.ui.theme.Typography
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BrowseSheet(
-    isShowBrowseSheet: Boolean,
     navController: NavController,
     onDismissRequest: () -> Unit,
 ) {
@@ -91,77 +90,75 @@ fun BrowseSheet(
               route = Routes.ComingSoonScreen.route,
           ),
       )
-  if (isShowBrowseSheet) {
-    ModalBottomSheet(
-        containerColor = Color(0xFF080808).copy(.9f),
-        onDismissRequest = onDismissRequest,
+  ModalBottomSheet(
+      containerColor = Color(0xFF080808).copy(.9f),
+      onDismissRequest = onDismissRequest,
+  ) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+        modifier = Modifier.padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-      LazyVerticalGrid(
-          columns = GridCells.Fixed(3),
-          modifier = Modifier.padding(horizontal = 16.dp),
-          horizontalArrangement = Arrangement.spacedBy(8.dp),
-          verticalArrangement = Arrangement.spacedBy(8.dp),
-      ) {
-        item(span = { GridItemSpan(maxLineSpan) }) {
-          Row(
-              horizontalArrangement = Arrangement.SpaceBetween,
-              verticalAlignment = Alignment.CenterVertically,
-          ) {
-            Text(
-                text = "BROWSE BY",
-                style =
-                    Typography.titleMedium.copy(
-                        Color.White.copy(.7f),
-                        fontWeight = FontWeight.SemiBold,
-                    ),
-            )
-            IconButton(onClick = onDismissRequest) {
-              Icon(
-                  painter = painterResource(R.drawable.ic_cross_mark_icon),
-                  modifier = Modifier.size(24.dp),
-                  contentDescription = "close",
-                  tint = Color.Gray,
-              )
-            }
-          }
-        }
-        itemsIndexed(data) { index, data ->
-          Column(
-              modifier =
-                  Modifier.background(
-                          brush =
-                              Brush.linearGradient(
-                                  colors = listOf(Color(0xFF131314), Color(0xFF0d0d0e)),
-                                  start = Offset(0f, 0f),
-                                  end = Offset(200f, 200f),
-                              )
-                      )
-                      .border(1.dp, Color.Gray, RoundedCornerShape(8.dp))
-                      .height(80.dp)
-                      .clickable(
-                          onClick = {
-                            onDismissRequest()
-                            navController.navigate(data.route)
-                          }
-                      ),
-              verticalArrangement = Arrangement.Center,
-              horizontalAlignment = Alignment.CenterHorizontally,
-          ) {
-            Image(
-                painter = painterResource(data.image),
-                contentDescription = null,
+      item(span = { GridItemSpan(maxLineSpan) }) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+          Text(
+              text = "BROWSE BY",
+              style =
+                  Typography.titleMedium.copy(
+                      Color.White.copy(.7f),
+                      fontWeight = FontWeight.SemiBold,
+                  ),
+          )
+          IconButton(onClick = onDismissRequest) {
+            Icon(
+                painter = painterResource(R.drawable.ic_cross_mark_icon),
                 modifier = Modifier.size(24.dp),
-                colorFilter = ColorFilter.tint(Color.Gray),
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = data.displayName,
-                style = Typography.labelMedium.copy(color = Color.White.copy(.8f)),
+                contentDescription = "close",
+                tint = Color.Gray,
             )
           }
         }
-        item(span = { GridItemSpan(maxLineSpan) }) { Spacer(modifier = Modifier.height(8.dp)) }
       }
+      itemsIndexed(data) { _, data ->
+        Column(
+            modifier =
+                Modifier.background(
+                        brush =
+                            Brush.linearGradient(
+                                colors = listOf(Color(0xFF131314), Color(0xFF0d0d0e)),
+                                start = Offset(0f, 0f),
+                                end = Offset(200f, 200f),
+                            )
+                    )
+                    .border(1.dp, Color.Gray, RoundedCornerShape(8.dp))
+                    .height(80.dp)
+                    .clickable(
+                        onClick = {
+                          onDismissRequest()
+                          navController.navigate(data.route)
+                        }
+                    ),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+          Image(
+              painter = painterResource(data.image),
+              contentDescription = null,
+              modifier = Modifier.size(24.dp),
+              colorFilter = ColorFilter.tint(Color.Gray),
+          )
+          Spacer(modifier = Modifier.height(4.dp))
+          Text(
+              text = data.displayName,
+              style = Typography.labelMedium.copy(color = Color.White.copy(.8f)),
+          )
+        }
+      }
+      item(span = { GridItemSpan(maxLineSpan) }) { Spacer(modifier = Modifier.height(8.dp)) }
     }
   }
 }
